@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Restaurant1.Models.admin.UsersDetail>
+@{ 
+    int count = 0;
+}
+<br />
+<table class="table">
+    <tr>
+        <th ></th>
+        <th><h3>Müşteri ID</h3></th>
+        <th style="padding-right:50px; text-align:center;"><h3>Müşteri İsmi</h3></th>
+        <th><h3>Müşteri Maili</h3></th>
+        <th><h3>Müşteri Numarası</h3></th>
+        <td></td>
+        <th><h3>Müşteri Adresi</h3></th>
+
+    </tr>
+    @foreach (var c in Model)
+    {
+        count +=1 ;
+        <tr>
+            <td><img src="~/Resimler/user.png"/></td>
+            <td style="text-align: center; vertical-align:middle; "  >@c.UserID</td>
+            <td style="text-align: center; vertical-align:middle; " >@c.Name</td>
+            <td style="text-align: center; vertical-align:middle; " id="@c.Mail" >@c.Mail</td>
+            <td style="text-align: center; vertical-align:middle; " id="@c.Phone" >@c.Phone</td>
+            @{
+            <td style="text-align: center; vertical-align:middle;">
+                <input type="button" id="@c.UserID" onclick="return KodGönder('@c.Phone', '@c.UserID', '@c.Mail', '@count')" value="Onay Kodu Gönder">
+                <input type="button" id="@count" onclick="return OnayKodu('@c.UserID', '@c.Mail', '@c.Phone', '@count')" value="Onayla" style="display:none"/>
+            </td>  
+            }
+            <td style=" vertical-align:middle; ">@c.Adress</td>
+            <td style="text-align: center; vertical-align:middle; ">
+                <button class="btn btn-danger" onclick="return Remove(@c.UserID)">Sil</button>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Restaurant1.Models.User.AdresBilgi>
+
+
+<!DOCTYPE html>
+
+<html>
+@{
+    var counter = 0;
+}
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color: #a7bcb9;">
+    @Html.Action("AddresCardsPartial", "User")
+</body>
+</html>
+
+<script>
+    function Düzenle(id) {
+        document.getElementById('adres').style.display = 'block';
+        var sentObj = {
+            AddressID:id
+        };
+
+        $.ajax({
+            url: '@Url.Action("AddressDüzenleJson", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data.adresBilgi.ilçe)
+                document.getElementById("ilçe").value = data.adresBilgi.ilçe;
+                document.getElementById("semt").value = data.adresBilgi.semt;
+                document.getElementById("sokak").value = data.adresBilgi.sokak;
+                document.getElementById("ApartmanAdi").value = data.adresBilgi.ApartmanAdı;
+                document.getElementById("ApNo").value = data.adresBilgi.AptNo;
+                document.getElementById("kat").value = data.adresBilgi.Kat;
+                document.getElementById("DaNo").value = data.adresBilgi.DaireNo;
+                document.getElementById("AdresID").value = data.adresBilgi.ID;
+
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function Güncelle() {
+        ilçe: document.getElementById("ilçe").value;
+        semt: document.getElementById("semt").value;
+        sokak: document.getElementById("sokak").value;
+        ApartmanAdi: document.getElementById("ApartmanAdi").value;
+        ApNo: document.getElementById("ApNo").value;
+        kat: document.getElementById("kat").value;
+        DaNo: document.getElementById("DaNo").value;
+        AdresID: document.getElementById("AdresID").value;
+
+        var Genel = semt.value + " mahallesi " + sokak.value + " sokak " + ApartmanAdi.value + " Apartmanı " + kat.value + ". kat " +
+            " Apt No:" + ApNo.value + " Daire No:" +
+            DaNo.value +" "+ ilçe.value;
+        var sentObj = {
+            Adres: Genel,
+            ilçe: ilçe.value,
+            semt: semt.value,
+            sokak: sokak.value,
+            ApartmanAdı: ApartmanAdi.value,
+            AptNo: ApNo.value,
+            Kat: kat.value,
+            DaireNo: DaNo.value,
+            ID: AdresID.value
+        };
+        console.log(sentObj)
+        $.ajax({
+            url: '@Url.Action("AddAddressJson", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function () {
+                alert("Başarıyla Eklendi")
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function () {
+                    $("#deneme").html(this.responseText);
+                }
+                xhttp.open("GET", "@Url.Action("AddresCardsPartial", "User")");
+                xhttp.send();
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+
+</script>

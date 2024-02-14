@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Restaurant1.Models.User.AdresVeBilgi>
+@{ ViewBag.Title = "Account"; }
+<html>
+<head>
+</head>
+<body style="background-color: #a7bcb9">
+    <div class="col-lg-3" id="account">
+        @Html.Action("AccountPartial", "User")
+    </div>
+</body>
+</html>
+
+
+<script>
+    function update() {
+        var sentObj = {
+            Email: document.getElementById("mail").value,
+            Adress: document.getElementById("adr").value,
+            Phone: document.getElementById("pho").value,
+        };
+        console.log(sentObj)
+        $.ajax({
+            url: '@Url.Action("UpdateInformations", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function () {
+                alert("Başarıyla Güncellendi");
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function () {
+                    $("#account").html(this.responseText);
+                }
+                xhttp.open("GET", "@Url.Action("Account", "User")");
+                xhttp.send();
+            },
+        });
+
+    }
+    function PswUpdate() {
+        var psw = document.getElementById("eskipsw").value;
+        var psw1 = document.getElementById("yenipsw1").value;
+        var psw2 = document.getElementById("yenipsw2").value;
+        if (psw1 == psw2) {
+            var sentObj = {
+                OldPassword:psw,
+                Password: psw1,
+            }
+            $.ajax({
+            url: '@Url.Action("UpdatePassword", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        alert("Başarıyla Güncellendi");
+                        const xhttp = new XMLHttpRequest();
+                        xhttp.onload = function () {
+                        $("#account").html(this.responseText);
+                }
+                xhttp.open("GET", "@Url.Action("Account", "User")");
+                xhttp.send();
+                    }
+                    else alert("Eski Şifre Bilgisini Kontrol Ediniz!");
+            },
+        });
+        }
+        else alert("Yeni Girilen Şifreler Uyuşmuyor!")
+
+    }
+</script>

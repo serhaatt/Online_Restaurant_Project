@@ -1,0 +1,200 @@
+﻿@model IEnumerable<Restaurant1.Models.User.Sepet>
+@{
+    Layout = null;
+    double toplam = 0;
+    double foodSum = 0;
+    double toplamAdet = 0;
+}
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Scripts/Css/CartCss.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="~/Scripts/Css/EmptyCart.css" />
+    <style>
+        body {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    @if (Model.Count() != 0 && Model.First().FoodName != null)
+    {
+        <div class="container mt-5 mb-5" style="text-align:center">
+            <div class="d-flex justify-content-center row">
+                <div class="col-md-8">
+                    <div class="p-2">
+                        <h4>Alışveriş Sepetim</h4>
+                    </div>
+                    <div>
+                        <div class="d-flex flex-row align-items-center mt-3 p-2 rounded">
+                            <select class="form-select form-select-lg" id="adr">
+                                <option selected disabled value="@Model.First().Address">
+                                    @Model.First().Address
+                                </option>
+                                @foreach (var item in Model)
+                                {
+                                    <option value="@item.Address.">@item.Address</option>
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            <button class="btn btn-danger btn-block btn-lg ml-2 pay-button form-select-lg" onclick="update()" style="color:black">Adresimi Güncelle</button>
+                        </div>
+                    </div>
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.FoodName != null)
+                        {
+                            foodSum = item.Amount * item.FoodPrice;
+                            toplam += foodSum;
+                            toplamAdet += item.Amount;
+                            <div class="d-flex flex-row justify-content-sm-between align-items-center p-2 bg-white mt-4 px-3 rounded">
+                                <div class="mr-1"><img class="rounded" src="@item.FoodPicture" width="90"></div>
+                                <div class="d-flex flex-column align-items-center product-details">
+                                    <span class="font-weight-bold" style="font-size:18px;">@item.FoodName</span>
+                                    <div class="d-flex flex-row product-desc">
+                                        <div class="size mr-1"><p style="font-size:12px">@Html.ActionLink("Detayları Görüntüle", "Recipe", new { id = item.FoodID }, new { style = "color:black;text-decoration:none" })</p></div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center qty">
+                                    <button class="fa fa-minus text-danger minus" onclick="return decrease(@item.FoodID)"></button>
+                                    <h5 class="text-grey mt-1 mr-1 ml-1 place1">@item.Amount Adet</h5><button class="fa fa-plus text-success plus" onclick="return increase(@item.FoodID);"></button>
+                                </div>
+                                <div>
+                                    <h5 class="text-grey " style="position:relative;left:70px">@foodSum TL</h5>
+                                </div>
+                                <div class="d-flex align-items-center"><button class="fa fa-trash mb-1 text-danger" style="border: none;background-color:Background;" onclick="return remove(@item.FoodID)"></button></div>
+                            </div>}
+                    }
+                    <div class="d-flex align-items-center mt-3 p-2  bg-white rounded">
+                        <h5 class="text-grey mt-1 mr-1 ml-1" style="position:relative;left:275px">Tutar:</h5>
+                        <h5 class="text-grey mt-1 mr-1 ml-1" style="position:relative;left:480px">@toplamAdet Adet</h5>
+                        <h5 class="text-grey mt-1 mr-1 ml-1" style="position:relative;left:580px">@toplam TL</h5>
+                    </div>
+                    @if (Model.First().SiparişCounter == 2)
+                    {
+                        <div class="d-flex align-items-center mt-3 p-2  bg-white rounded">
+                            <h5 class="text-grey mt-1 mr-1 ml-1" style="position:relative;left:275px">3.Siparişe Özel 15 TL İndirim</h5>
+                            <h5 class="text-grey mt-1 mr-1 ml-1" style="position:relative;left:450px"><p>-15 TL</p></h5>
+                            @{toplam -= 15; }
+                        </div> }
+                    else if (Model.First().SiparişCounter % 5 == 4)
+                    {
+                        <div class="d-flex align-items-center mt-3 p-2  bg-white rounded">
+                            <h5 class="text-grey mt-1 mr-1 ml-1" style="position:relative;left:275px;">5.Siparişe Özel %50 İndirim</h5><br />
+                            <h6 class="text-grey mt-1 mr-1 ml-1" style="position:relative;top:20px;left:37px">Maksimum 75 TL kupon uygulanır.</h6>
+                            <h5 class="text-grey mt-1 mr-1 ml-1" style="position:relative;left:230px">
+                                @{if (toplam / 2 > 75)
+                                    {
+                                        <p>-75 TL</p>
+                                        toplam -= 75;
+                                    }
+                                    else
+                                    {
+                                        double sale = toplam / 2;
+                                        <p>@sale TL</p>
+                                        toplam -= sale;
+                                    } }
+                            </h5>
+                        </div>}
+                    <div class="d-flex align-items-center mt-3 p-2  bg-white rounded">
+                        <h5 class="text-grey mt-1 mr-1 ml-1" id="kpnName" style="position:relative;left:275px">Kupon Uygulanmadı</h5>
+                        <h5 class="text-grey mt-1 mr-1 ml-1" id="kpnTutar" style="position:relative;left:600px"></h5>
+                    </div>
+                    <div class="d-flex align-items-center mt-3 p-2  bg-white rounded">
+                        <h5 class="text-grey mt-1 mr-1 ml-1" style="position:relative;left:280px">Son Tutar:</h5>
+                        <h5 class="text-grey mt-1 mr-1 ml-1" style="position:relative;left:400px">@toplamAdet Adet</h5>
+                        <h5 class="text-grey mt-1 mr-1 ml-1" style="position:relative;left:550px" id="sonTutar">@toplam TL</h5>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><input type="text" id="kpn" class="form-control border-0 gift-card" placeholder="İndirim Kodu/Hediye Kartı"><button class="btn btn-outline-warning btn-sm ml-2" type="button" onclick="return kupon()">Uygula</button></div>
+                    @if (toplam < 100)
+                    {
+                        <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><button class="btn btn-warning btn-block btn-lg ml-2 pay-button" type="button" style="position:relative;left:0px" disabled>Minimum Sepet Tutarı 100 TL'dir!</button></div> }
+                    else
+                    {
+                        <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><button class="btn btn-warning btn-block btn-lg ml-2 pay-button" type="button" style="position:relative;left:0px">@Html.ActionLink("Ödemeye Geç", "Payment", "User", new { style = "color:black;text-decoration:none" })</button></div>}
+
+
+                </div>
+            </div>
+        </div>}
+    else
+    {
+        <div class="container-fluid  mt-100" style="background-color: #a7bcb9">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body cart">
+                            <div class="col-sm-12 empty-cart-cls text-center">
+                                <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                                <h3><strong>Sepetiniz Boş...</strong></h3>
+                                <h4>Haydi! Sepete bir şeyler ekleyelim!!</h4>
+                                <a href="/User/Food" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Listeye Dön</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+<script language="JavaScript">
+    function update() {
+            var sentObj = {
+                Address: document.getElementById("adr").value,
+        };
+            $.ajax({
+                url: '@Url.Action("UpdateInform", "User")',
+                data: JSON.stringify(sentObj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function () {
+                    const xhttp = new XMLHttpRequest();
+                    alert("Başarıyla Değiştirildi!!")
+                    xhttp.open("GET", "@Url.Action("Cart", "User")");
+                    xhttp.send();
+                },
+            });
+    }
+    function kupon() {
+            var sentObj = {
+                Kupon1: document.getElementById("kpn").value,
+        };
+        console.log(sentObj)
+            $.ajax({
+                url: '@Url.Action("Kupon", "User")',
+                data: JSON.stringify(sentObj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        console.log(data);
+                        const xhttp = new XMLHttpRequest();
+                        alert("Başarıyla Uygulandı!!");
+                        document.getElementById("kpnName").innerHTML = data.Name;
+                        document.getElementById("kpnTutar").innerHTML = data.Tutar + " TL";
+                        xhttp.open("GET", "@Url.Action("Cart", "User")");
+                        xhttp.send();
+                        var price = document.getElementById("sonTutar").innerHTML;
+                        var total = document.getElementById("kpnTutar").innerHTML;
+                        var s = parseFloat(price) - parseFloat(total);
+                        document.getElementById("sonTutar").innerHTML = s + " TL";
+                        document.getElementById("kpn").type = "button";
+                        document.getElementById("kpn").disable = "disabled";
+                        document.getElementById("kpn").value = "Kupon Uygulandı";
+                    }
+
+                    else {
+                        alert("Kupon Kodunu Kontrol Ediniz!")
+                    }
+
+                },
+            });
+        }
+
+</script>

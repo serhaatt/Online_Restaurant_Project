@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "Coruier";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<html>
+<head>
+    <style>
+        .box {
+            position: relative;
+            top: 90px;
+            right: 120px;
+            height: 40px;
+            width: 240px;
+            border-radius: 8px;
+        }
+
+        .box_button {
+            position: relative;
+            top: 34px;
+            left: 620px;
+            height: 40px;
+            width: 170px;
+            border-radius: 8px;
+        }
+
+        .title {
+            position: relative;
+            left: 450px;
+            height: 40px;
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2 class="title">KURYE</h2>
+    </div>
+    <div>
+        <div>
+            <form action="">
+                <input class="box" id="CoruierNumber" inputmode="numeric" maxlength="6" minlength="6" placeholder="Kurye Giriş Numarasını Giriniz" required />
+                <input class="box" id="CoruierPassword" min="6" inputmode="numeric" type="password" placeholder="Kurye Şifresini Giriniz" required />
+                <input class="box" id="CoruierPhone" minlength="11" maxlength="11" inputmode="numeric" placeholder="Kurye Telefon Numarasını Giriniz" required />
+            </form>
+            <button class="box_button btn btn-success" onclick="return AddCoruier()">Kurye Ekle</button>
+            <button class="box_button btn btn-warning" onclick="return CreateCoruier()">Kurye Numarası Yarat</button>
+        </div>
+    </div>
+    <h3 style="position:relative;top:100px;right:100px">Kurye Listesi</h3>
+    <div class="col-lg-3" id="coruiers">
+        @Html.Action("CoruierPartial", "Admin")
+    </div>
+</body>
+</html>
+<script>
+    function CreateCoruier() {
+        var characters = "1234567890";
+        var lenString = 6;
+        var randomstring = '';
+        for (var i = 0; i < lenString; i++) {
+            var rnum = Math.floor(Math.random() * characters.length);
+            randomstring += characters.substring(rnum, rnum + 1);
+        }
+        document.getElementById("CoruierNumber").value = randomstring;
+    }
+    function AddCoruier() {
+        var sentObj = {
+            CoruierNumber: document.getElementById("CoruierNumber").value,
+            CoruierPassword: document.getElementById("CoruierPassword").value,
+            CoruierPhone: document.getElementById("CoruierPhone").value,
+        }
+
+        $.ajax({
+            url: '@Url.Action("AddCoruier", "Admin")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message)
+                    const xhttp = new XMLHttpRequest();
+                    xhttp.onload = function () {
+                        $("#coruiers").html(this.responseText);
+                    }
+                    xhttp.open("GET", "@Url.Action("CoruierPartial", "Admin")");
+                    xhttp.send();
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+        });
+    }
+    function RemoveCoruier(id) {
+        var sentObj = {
+            ID:id
+        }
+
+        $.ajax({
+            url: '@Url.Action("RemoveCoruier", "Admin")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message)
+                    const xhttp = new XMLHttpRequest();
+                    xhttp.onload = function () {
+                        $("#coruiers").html(this.responseText);
+                    }
+                     xhttp.open("GET", "@Url.Action("CoruierPartial", "Admin")");
+                    xhttp.send();
+                }
+                else {
+                    alert(data.message)
+                }
+            },
+        });
+    }
+</script>

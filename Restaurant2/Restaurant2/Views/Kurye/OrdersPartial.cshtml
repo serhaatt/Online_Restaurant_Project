@@ -1,0 +1,115 @@
+﻿
+@model IEnumerable<Restaurant1.Models.admin.OrderNames>
+@{
+    var cn = Model.First().CustomerName;
+    var date = Model.First().date;
+    double toplam = 0;
+    DateTime d = Model.First().date;
+    int i = Model.First().UserID;
+}
+<center >
+    <h1>Müşteri Siparişleri</h1><br />
+</center>
+<table class="table ">
+    <thead class="thead-dark">
+        <tr scope="row">
+            <th style="font-size:20px">@Model.First().CustomerName  @Model.First().date.ToString("dd/MM/yyyy") @Model.First().date.ToString("HH:mm") Tarihli Siparişi</th>
+            <th style="font-size:20px"> Adet</th>
+            <th style="font-size:20px"> Fiyat</th>
+            <th style="font-size:20px"> Sipariş Durumu: </th>
+            <th style="font-size:20px">@Model.First().Situation</th>
+            @if (Model.First().Situation == "Onay Bekliyor" || Model.First().Situation == "Hazırlanıyor" || Model.First().Situation == "İptal Edildi" || Model.First().Situation == "Teslim Edildi")
+            {
+                <th><button hidden></button></th>
+            }
+            else
+            {
+                <th>
+                    <button class="btn btn-success" onclick="return Situation('@d', '@i','1')">@Model.First().Sit</button>
+                </th>
+            }
+            <td>
+                <input id="PID" hidden value="@Model.First().UserID" />
+                <input id="Pdate" hidden value="@Model.First().date" />
+            </td>
+        </tr>
+    </thead>
+    @{ foreach (var c in Model)
+        {
+            int price = 0;
+            if (date == c.date && cn == c.CustomerName)
+            {
+                price = @c.Price * @c.Amount;
+                toplam += price;
+                <tr>
+                    <td>@c.FoodName</td>
+                    <td>@c.Amount Adet</td>
+                    <td>@price TL</td>
+
+                </tr>
+
+            }
+            else
+            {
+                <tr>
+                    <td style="font-weight:bold; font-size:17px">Toplam :</td>
+                    <td></td>
+                    <td style="font-weight:bold;">@toplam TL</td>
+
+                </tr>
+                <thead class="thead-dark">
+                    <tr>
+                <thead class="thead-dark">
+                <th style="font-size:20px">@c.CustomerName  @c.date.ToString("dd/MM/yyyy") @c.date.ToString("HH:mm") Tarihli Siparişi</th>
+                <th style="font-size:20px"> Adet</th>
+                <th style="font-size:20px"> Fiyat</th>
+                <th style="font-size:20px"> Sipariş Durumu: </th>
+                <th style="font-size:20px"> @c.Situation</th>
+                @{
+                    if (c.Situation == "Onay Bekliyor" || c.Situation == "İptal Edildi" || c.Situation == "Hazırlanıyor" || c.Situation == "Teslim Edildi")
+                    {
+                        <th><button hidden></button></th>
+                    }
+                    else if (c.Situation == "Kurye Bekleniyor")
+                    {
+
+                        <th>
+                            <button class="btn btn-success" onclick="return Situation('@c.date', '@c.UserID','0')">Teslim Aldım</button>
+                        </th>
+                    }
+                    else
+                    {
+                        <th>
+                            <button class="btn btn-success" onclick="return Situation('@c.date', '@c.UserID','1')">Teslim Ettim</button>
+                        </th>
+                    }
+                    <td>
+                        <input id="PID" hidden value="@c.UserID" />
+                        <input id="Pdate" hidden value="@c.date" />
+                    </td>
+                }
+                </tr>
+                </thead>
+                toplam = 0;
+                price = @c.Price * @c.Amount;
+                toplam += price;
+                <tr>
+                    <td>@c.FoodName</td>
+                    <td>@c.Amount Adet</td>
+                    <td>@price TL</td>
+
+                </tr>
+            }
+            date = c.date;
+            cn = c.CustomerName;
+        } }
+    <tr>
+        <td style="font-weight:bold; font-size:17px">Toplam :</td>
+        <td></td>
+        <td style="font-weight:bold;">@toplam TL</td>
+
+    </tr>
+</table>
+
+
+

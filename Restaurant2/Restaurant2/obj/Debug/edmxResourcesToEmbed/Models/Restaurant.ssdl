@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RestaurantModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Addresses">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="Ilce" Type="nvarchar" MaxLength="50" />
+    <Property Name="Semt" Type="nvarchar" MaxLength="50" />
+    <Property Name="Sokak" Type="nvarchar" MaxLength="50" />
+    <Property Name="ApartmanAdı" Type="nvarchar" MaxLength="50" />
+    <Property Name="AptNo" Type="int" />
+    <Property Name="Kat" Type="int" />
+    <Property Name="DaireNo" Type="int" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="AdminID" />
+    </Key>
+    <Property Name="AdminID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdminName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AdminMail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AdminPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdminOrder">
+    <Key>
+      <PropertyRef Name="AdminOrderID" />
+    </Key>
+    <Property Name="AdminOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="FoodID" Type="int" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" />
+    <Property Name="OrderSituation" Type="int" />
+    <Property Name="OrderAmount" Type="int" />
+    <Property Name="OrderAddress" Type="int" />
+    <Property Name="OrderPhone" Type="nvarchar" MaxLength="11" />
+  </EntityType>
+  <EntityType Name="Food">
+    <Key>
+      <PropertyRef Name="FoodID" />
+    </Key>
+    <Property Name="FoodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FoodCategory" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FoodName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FoodPrice" Type="int" Nullable="false" />
+    <Property Name="FoodCal" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FoodFat" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FoodCar" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FoodPro" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FoodSalt" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FoodSugar" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FoodMin" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FoodPicture" Type="text" />
+  </EntityType>
+  <EntityType Name="Inventory">
+    <Key>
+      <PropertyRef Name="InventoryID" />
+    </Key>
+    <Property Name="InventoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InventoryPiece" Type="int" Nullable="false" />
+    <Property Name="FoodID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kupon">
+    <Key>
+      <PropertyRef Name="KuponID" />
+    </Key>
+    <Property Name="KuponID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kupon" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Durum" Type="nvarchar" MaxLength="1" Nullable="false" />
+    <Property Name="KuponName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="KuponTutar" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kurye">
+    <Key>
+      <PropertyRef Name="KuryeID" />
+    </Key>
+    <Property Name="KuryeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KuryeNumber" Type="int" />
+    <Property Name="KuryePassword" Type="nvarchar" MaxLength="50" />
+    <Property Name="KuryePhone" Type="nvarchar" MaxLength="11" />
+  </EntityType>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="FoodID" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="int" />
+  </EntityType>
+  <EntityType Name="Recipe">
+    <Key>
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="RecipeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FoodRecipe" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FoodID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserMail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserAdress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserPhone" Type="nchar" MaxLength="11" Nullable="false" />
+    <Property Name="OrderCount" Type="int" />
+  </EntityType>
+  <Association Name="FK_Addresses_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Addresses" Type="Self.Addresses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Addresses">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminOrder_Food">
+    <End Role="Food" Type="Self.Food" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AdminOrder" Type="Self.AdminOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="FoodID" />
+      </Principal>
+      <Dependent Role="AdminOrder">
+        <PropertyRef Name="FoodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminOrder_users">
+    <End Role="users" Type="Self.users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AdminOrder" Type="Self.AdminOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="AdminOrder">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inventory_Food">
+    <End Role="Food" Type="Self.Food" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="FoodID" />
+      </Principal>
+      <Dependent Role="Inventory">
+        <PropertyRef Name="FoodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_orders_Food">
+    <End Role="Food" Type="Self.Food" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="FoodID" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="FoodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_orders_users">
+    <End Role="users" Type="Self.users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Recipe_Food">
+    <End Role="Food" Type="Self.Food" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="FoodID" />
+      </Principal>
+      <Dependent Role="Recipe">
+        <PropertyRef Name="FoodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RestaurantModelStoreContainer">
+    <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdminOrder" EntityType="Self.AdminOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Food" EntityType="Self.Food" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kupon" EntityType="Self.Kupon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kurye" EntityType="Self.Kurye" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Addresses_users" Association="Self.FK_Addresses_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="Addresses" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminOrder_Food" Association="Self.FK_AdminOrder_Food">
+      <End Role="Food" EntitySet="Food" />
+      <End Role="AdminOrder" EntitySet="AdminOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminOrder_users" Association="Self.FK_AdminOrder_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="AdminOrder" EntitySet="AdminOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inventory_Food" Association="Self.FK_Inventory_Food">
+      <End Role="Food" EntitySet="Food" />
+      <End Role="Inventory" EntitySet="Inventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_orders_Food" Association="Self.FK_orders_Food">
+      <End Role="Food" EntitySet="Food" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_orders_users" Association="Self.FK_orders_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Recipe_Food" Association="Self.FK_Recipe_Food">
+      <End Role="Food" EntitySet="Food" />
+      <End Role="Recipe" EntitySet="Recipe" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,58 @@
+﻿@model Restaurant1.Models.User.RecipeFood_Image
+
+@{
+    ViewBag.Title = "Recipe";
+}
+<html>
+<head>
+    <style>
+        body {
+            background-color: #a7bcb9;
+        }
+    </style>
+</head>
+<body >
+    <table class="table">
+        <tr>
+            <td>
+                <center>
+                    <h1>@Model.RecipeFood.FoodName</h1>
+                    <p><img width="400px" style="border-radius:10px" height="300px" src="@Model.Image" /> </p>
+                </center>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                
+                <p>
+                    @Model.RecipeFood.Description
+                </p>
+            </td>
+        </tr>
+
+    </table>
+    <table class="table">
+
+        <tr>
+            <th><h3>Kalori</h3></th>
+            <th><h3>Yağ</h3></th>
+            <th><h3>Karbonhidrat</h3></th>
+            <th><h3>Protein</h3></th>
+            <th><h3>Tuz</h3></th>
+            <th><h3>Şeker</h3></th>
+            <th><h3>Mineral</h3></th>
+        </tr>
+        <tr>
+            <td>@Model.RecipeFood.Calory</td>
+            <td>@Model.RecipeFood.Fat</td>
+            <td>@Model.RecipeFood.Carbohydrate</td>
+            <td>@Model.RecipeFood.Protein</td>
+            <td>@Model.RecipeFood.Salt</td>
+            <td>@Model.RecipeFood.Sugar</td>
+            <td>@Model.RecipeFood.Mineral</td>
+        </tr>
+    </table>
+
+
+</body>
+</html>

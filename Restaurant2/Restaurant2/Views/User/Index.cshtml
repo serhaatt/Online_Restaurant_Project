@@ -1,0 +1,55 @@
+﻿@model Restaurant1.Models.User.UserInfo
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Scripts/Css/styleLogin.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+<body >
+    @using (Html.BeginForm("Index", "User", FormMethod.Post))
+    {
+<section class="container">
+    <div class="circle circle-one"></div>
+    <div class="form-container">
+        <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" class="illustration" />
+        <h1 class="opacity" style="position:relative;left:100px">Kullanıcı Girişi</h1>
+        <form>
+            <div class="login-container">
+                @Html.AntiForgeryToken()
+
+
+                @Html.LabelFor(m => m.Email, new { @style = "font-size:15px" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @style = "font-size:15px" }) <br />
+
+                @Html.LabelFor(m => m.Password, new { @style = "font-size:15px" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @minlength = 4, @style = "font-size:15px" }) <br />
+
+
+                <div class="register-forget opacity" style="position:relative;left:115px">
+                    <input type="submit" value="Giriş Yap" style="font-size:large" />
+                </div>
+                <div class="register-forget opacity" style="position:relative;left:115px">
+                    <button style="font-size:20px;width:85px;border:1px">@Html.ActionLink("Kayıt ol", "Register", "User", new { style = "text-decoration:none;color:black" })</button><br /><br />
+                </div>
+                @if (Model.Error != null)
+                {
+                    <div class="alert alert-danger" style="width:340px">
+                        <i class="bi-exclamation-octagon-fill" style="font-size:15px;font-family:Arial"> Hata!  @Model.Error</i>
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+    <div class="circle circle-two"></div>
+
+</section>            
+    }
+    <script src="~/Scripts/JsLogin.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Restaurant1.Models.User.Cart>
+<div class="addedNotification" id="ntfctn">
+    <button class="btn btn-danger" style="position:absolute;left:1115px" onclick="return closeNtfctn()">X</button>
+    <div>
+        <div>
+            @Html.Action("Recipe", "User", new { id = Model.First().FoodID, style = "width:100px;height:100px" })
+        </div>
+
+    </div>
+</div>

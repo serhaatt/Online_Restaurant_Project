@@ -1,0 +1,47 @@
+﻿@model Restaurant1.Models.User.UserInfo
+@{ 
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<html>
+<body style="background-color: #a7bcb8">
+    <center>
+        @using (Html.BeginForm("Register", "User", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <h1>Kayıt ol</h1>
+
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Ad Soyad" }) <br />
+
+
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" }); <br />
+
+
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Şifre", @minlength = 4, @maxlength = 12 })<br />
+
+
+
+            @Html.LabelFor(m => m.Adress)
+            @Html.TextAreaFor(m => m.Adress, new { @class = "form-control", @placeholder = "Adres" }) <br />
+
+
+            @Html.LabelFor(m => m.Phone)
+            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Telefon Numarası", @minlength=11, @maxlength=11}) <br />
+
+
+
+            <input type="submit" value="Kayıt Ol" /> <br />
+
+
+
+            <div class="alert-danger">@Model.Error</div>
+
+
+
+        }
+    </center>
+</body>
+</html>

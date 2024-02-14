@@ -1,0 +1,129 @@
+﻿@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color: #a7bcb9"  id="adres">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-lg-6" style="position:relative; top:100px;">
+                    <h1 class="text-center" style="position:relative; bottom:70px;">Yeni Adres Ekle</h1>
+
+
+
+
+                    <div class="col-md-8 order-md-1" style="position:relative; left:90px;">
+
+                        <form class="needs-validation" novalidate="">
+                            <div class="mb-3">
+                                <label for="semt">Semt </label>
+                                <input type="text" class="form-control" id="semt" placeholder="Semt">
+                                <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email">Sokak </label>
+                                <input type="text" class="form-control" id="sokak" placeholder="Sokak">
+                                <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email">İlçe </label>
+                                <input type="text" class="form-control" id="ilçe" placeholder="İlçe">
+                                <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName">Apartman Adı</label>
+                                    <input type="text" class="form-control" id="ApartmanAdi" placeholder="" value="" required="">
+                                    <div class="invalid-feedback"> Valid first name is required. </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName">Apartman Numarası</label>
+                                    <input type="number" class="form-control" id="ApNo" placeholder="" value="" required="">
+                                    <div class="invalid-feedback"> Valid last name is required. </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName">Kat</label>
+                                    <input type="number" class="form-control" id="kat" placeholder="" value="" required="">
+                                    <div class="invalid-feedback"> Valid first name is required. </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName">Daire Numarası</label>
+                                    <input type="number" class="form-control" id="DaNo" placeholder="" value="" required="">
+                                    <div class="invalid-feedback"> Valid last name is required. </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div style="position:relative; top:20px; left:85px;">
+                            <button class="btn btn-success" onclick="return Ekle()">Onayla</button>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("Account","User")" class="btn btn-danger" style="position:relative; bottom:14px; left:170px;">Geri Dön</a>
+
+                        </div>
+                        <div class="col-lg-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>
+
+<script>
+    function Ekle() {
+        ilçe: document.getElementById("ilçe").value;
+        semt: document.getElementById("semt").value;
+        sokak: document.getElementById("sokak").value;
+        ApartmanAdi: document.getElementById("ApartmanAdi").value;
+        ApNo: document.getElementById("ApNo").value;
+        kat: document.getElementById("kat").value;
+        DaNo: document.getElementById("DaNo").value;
+
+        var Genel = semt.value + " mahallesi " + sokak.value + " sokak " + ApartmanAdi.value + " Apartmanı " + kat.value + ". kat " +
+            " Apt No:" + ApNo.value + " Daire No:" +
+            DaNo.value +" "+ ilçe.value;
+        var sentObj = {
+            Adres: Genel,
+            userID: 1,
+            ilçe: ilçe.value,
+            Semt: semt.value,
+            Sokak: sokak.value,
+            ApartmanAdı: ApartmanAdi.value,
+            AptNo: ApNo.value,
+            Kat: kat.value,
+            DaireNo:DaNo.value
+        };
+
+        $.ajax({
+            url: '@Url.Action("AddAddressJson", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function () {
+                alert("Başarıyla Eklendi")
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function () {
+                    $("#adres").html(this.responseText);
+                }
+                xhttp.open("GET", "@Url.Action("AddAddress", "User")");
+                xhttp.send();
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+
+</script>

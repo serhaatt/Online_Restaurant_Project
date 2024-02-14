@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Restaurant1.Models.admin.Cupon>
+@{ if (Session["w"] != null)
+    {
+        ViewBag.Title = "UserCupons";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout= "~/Views/Shared/_LayoutMisafir.cshtml";
+    }
+}
+<html>
+<head>
+    <style>
+        .card {
+            width: 350px;
+            padding: 10px;
+            border-radius: 20px;
+            background: #ffe9e3;
+            color: black;
+            border: none;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            height: 40vh;
+        }
+
+        .card h1 {
+            font-size: 48px;
+            margin-bottom: 0px;
+        }
+
+        .card span {
+            font-size: 28px;
+        }
+
+        .image {
+            position: absolute;
+            opacity: .1;
+            left: 0;
+            top: 0;
+        }
+
+        .image2 {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            opacity: .1;
+        }
+    </style>
+    <title>Kuponlar</title>
+</head>
+<body>
+    <center>
+        <h1>Kuponlar</h1>
+    </center>
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mt-4">
+                    <div class="col-sm-10 mb-8 mb-sm-0" style="width:auto; ">
+                        <div class="container">
+                            <div class="d-flex card text-center">
+                                <div class="image"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
+                                <div class="image2"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
+                                <h1>@item.KuponTutarı ₺</h1><span class="d-block">@item.KuponName</span>
+                                <div class="mt-4"><h4>Kupon Kodu: <span style="font-size:20px" id="@item.KuponKodu">@item.KuponKodu</span></h4></div>
+                                <button class="btn" style="background-color:#fc9d9d" onclick="return copyCode('@item.KuponKodu')">Kodu Kopyala</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function copyCode(kod) {
+        var kuponKoduAlani = document.getElementById(kod);
+
+        // Kupon kodunu seç ve kopyala
+        var range = document.createRange();
+        range.selectNode(kuponKoduAlani);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+
+        // Kopyalandı mesajı veya başka bir geri bildirim sağla
+        alert('Kupon kodu kopyalandı: ' + kuponKoduAlani.innerText);
+    };
+</script>
+
+

@@ -1,0 +1,282 @@
+﻿@using Restaurant1.Models
+@model IEnumerable<Restaurant1.Models.admin.DetailsInfo>
+@{ int controller = 0; }
+<html>
+<head>
+    <link href="~/Scripts/Css/FoodPartialCss.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .addedNotification {
+            position: fixed;
+            text-align: center;
+            top: 50px;
+            left: 400px;
+            width: 1150px;
+            height: 840px;
+            border-radius: 8px;
+            background-color: #D3D3D3;
+        }
+    </style>
+</head>
+<body>
+    <div id="FoodDetail" style="position:relative;z-index:3">
+    </div>
+
+    <table class="table">
+        @foreach (var c in Model)
+        {
+            if (c.FoodCategory == "starter")
+            {
+                if (controller == 2)
+                {
+                    controller = 0;
+                    <td>
+                        <div class='container-fluid'>
+                            <div>
+                                <img style="width:250px;height:250px;text-align:center" class='mx-auto img-thumbnail' src="@c.FoodPicture" />
+                                <div class="card-body text-center mx-auto">
+                                    <div class='cvp'>
+                                        <h5 class="card-title font-weight-bold">@c.FoodName</h5>
+                                        <p class="card-text">@c.FoodPrice ₺</p>
+                                        <button class="btn btn-warning" onclick="return showDetail(@c.FoodID)" style="width:147.5px;height:42px;border-radius:10px;" >Detayları Görüntüle</button>
+                                        <p></p>
+                                        @*<button style="width:148px" class="btn btn-success" onclick="return add(@c.FoodID)">Sepete Ekle</button>*@
+                                        <div>
+                                            @Html.Action("AddCartButton", "User", new { id = c.FoodID })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </td>
+                    <tr></tr>
+                }
+
+                else
+                {
+                    controller++;
+                    <td>
+                        <div class='container-fluid'>
+                            <div>
+                                <center>
+                                    <img style="width: 250px; height: 250px; text-align: center" class='mx-auto img-thumbnail' src="@c.FoodPicture" />
+                                </center>
+                                <div class="card-body text-center mx-auto">
+                                    <div class='cvp'>
+                                        <h5 class="card-title font-weight-bold">@c.FoodName</h5>
+                                        <p class="card-text">@c.FoodPrice ₺</p>
+                                        <button class="btn btn-warning" onclick="return showDetail(@c.FoodID)" style="width:147.5px;height:42px;border-radius:10px;">Detayları Görüntüle</button>
+                                        <p></p>
+                                        <div>
+                                            @Html.Action("AddCartButton", "User", new { id = c.FoodID })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                }
+            }
+        }
+        @{controller = 0;}
+        <tr hidden><td><h3>Ana yemekler</h3></td></tr>
+        @foreach (var c in Model)
+        {
+
+            if (c.FoodCategory == "main")
+            {
+                if (controller == 2)
+                {
+                    controller = 0;
+                    <td>
+                        <div class='container-fluid'>
+                            <div>
+                                <center>
+                                    <img style="width: 250px; height: 250px; text-align: center" class='mx-auto img-thumbnail'
+                                         src="@c.FoodPicture" />
+                                </center>
+                                <div class="card-body text-center mx-auto">
+                                    <div class='cvp'>
+                                        <h5 class="card-title font-weight-bold">@c.FoodName</h5>
+                                        <p class="card-text">@c.FoodPrice ₺</p>
+                                        <button class="btn btn-warning" onclick="return showDetail(@c.FoodID)" style="width:147.5px;height:42px;border-radius:10px;">Detayları Görüntüle</button><p></p>
+                                        <div>
+                                            @Html.Action("AddCartButton", "User", new { id = c.FoodID })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <tr></tr>
+                }
+
+                else
+                {
+                    controller++;
+                    <td>
+                        <div class='container-fluid'>
+                            <div>
+                                <center>
+                                    <img style="width: 250px; height: 250px; text-align: center" class='mx-auto img-thumbnail' src="@c.FoodPicture" />
+                                </center>
+                                <div class="card-body text-center mx-auto">
+                                    <div class='cvp'>
+                                        <h5 class="card-title font-weight-bold">@c.FoodName</h5>
+                                        <p class="card-text">@c.FoodPrice ₺</p>
+                                        <button class="btn btn-warning" onclick="return showDetail(@c.FoodID)" style="width:147.5px;height:42px;border-radius:10px;">Detayları Görüntüle</button><p></p>
+                                        <div>
+                                            @Html.Action("AddCartButton", "User", new { id = c.FoodID })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                }
+            }
+        }
+        @{controller = 0;}
+        <tr hidden><td><h3>Tatlılar</h3></td></tr>
+        @foreach (var c in Model)
+        {
+            if (c.FoodCategory == "dessert")
+            {
+                if (controller == 2)
+                {
+                    controller = 0;
+                    <td>
+                        <div class='container-fluid'>
+                            <div>
+                                <center>
+                                    <img style="width: 250px; height: 250px; text-align: center" class='mx-auto img-thumbnail'
+                                         src="@c.FoodPicture" />
+                                </center>
+                                <div class="card-body text-center mx-auto">
+                                    <div class='cvp'>
+                                        <h5 class="card-title font-weight-bold">@c.FoodName</h5>
+                                        <p class="card-text">@c.FoodPrice ₺</p>
+                                        <button class="btn btn-warning" onclick="return showDetail(@c.FoodID)" style="width:147.5px;height:42px;border-radius:10px;">Detayları Görüntüle</button><p></p>
+                                        <div>
+                                            @Html.Action("AddCartButton", "User", new { id = c.FoodID })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </td>
+                    <tr></tr>
+                }
+
+                else
+                {
+                    controller++;
+                    <td>
+                        <div class='container-fluid'>
+                            <div>
+                                <center>
+                                    <img style="width: 250px; height: 250px; text-align: center" class='mx-auto img-thumbnail' src="@c.FoodPicture" />
+                                </center>
+                                <div class="card-body text-center mx-auto">
+                                    <div class='cvp'>
+                                        <h5 class="card-title font-weight-bold">@c.FoodName</h5>
+                                        <p class="card-text">@c.FoodPrice ₺</p>
+                                        <button class="btn btn-warning" onclick="return showDetail(@c.FoodID)" style="width:147.5px;height:42px;border-radius:10px;">Detayları Görüntüle</button><p></p>
+                                        <div>
+                                            @Html.Action("AddCartButton", "User", new { id = c.FoodID })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                }
+            }
+        }
+        @{controller = 0;}
+        <tr hidden><td><h3>İçecekler</h3></td></tr>
+        @foreach (var c in Model)
+        {
+            if (c.FoodCategory == "drink")
+            {
+                if (controller == 2)
+                {
+                    controller = 0;
+                    <td>
+                        <div class='container-fluid'>
+                            <div>
+                                <center>
+                                    <img style="width: 250px; height: 250px; text-align: center" class='mx-auto img-thumbnail'
+                                         src="@c.FoodPicture" />
+                                </center>
+                                <div class="card-body text-center mx-auto">
+                                    <div class='cvp'>
+                                        <h5 class="card-title font-weight-bold">@c.FoodName</h5>
+                                        <p class="card-text">@c.FoodPrice ₺</p>
+                                        <button class="btn btn-warning" onclick="return showDetail(@c.FoodID)" style="width:147.5px;height:42px;border-radius:10px;">Detayları Görüntüle</button><p></p>
+                                        <div>
+                                            @Html.Action("AddCartButton", "User", new { id = c.FoodID })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </td>
+                    <tr></tr>
+                }
+
+                else
+                {
+                    controller++;
+                    <td>
+                        <div class='container-fluid'>
+                            <div>
+                                <center>
+                                    <img style="width: 250px; height: 250px; text-align: center" class='mx-auto img-thumbnail' src="@c.FoodPicture" />
+                                </center>
+                                <div class="card-body text-center mx-auto">
+                                    <div class='cvp'>
+                                        <h5 class="card-title font-weight-bold">@c.FoodName</h5>
+                                        <p class="card-text">@c.FoodPrice ₺</p>
+                                        <button class="btn btn-warning" onclick="return showDetail(@c.FoodID)" style="width:147.5px;height:42px;border-radius:10px;">Detayları Görüntüle</button><p></p>
+                                        <div>
+                                            @Html.Action("AddCartButton", "User", new { id = c.FoodID })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                }
+            }
+        }
+    </table>
+</body>
+</html>
+<script>
+    function showDetail(id1) {
+        var sentObj = {
+            id:id1,
+        };
+        $.ajax({
+            url: '@Url.Action("ShowFoodDetail", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+           success: function () {
+                const xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "@Url.Action("FoodDetailPartial", "User")");
+                xhttp.send();
+                xhttp.onload = function () {
+                    $("#FoodDetail").html(this.responseText);
+                }
+            },
+        });
+
+    }
+</script>
+

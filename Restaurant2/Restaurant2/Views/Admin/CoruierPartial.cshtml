@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Restaurant1.Models.admin.KuryeInfo>
+@{
+    int count = 1;
+}
+<html>
+<body>
+    <table class="table" style="position:relative;top:120px;right:150px">
+        @foreach (var item in Model)
+        {
+            if (count != 4)
+            {
+                count++;
+                <td>
+                    <div style="width:500px">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body" style="background-color:darkslategrey;border-radius:5px">
+                                    <p class="card-text">Kurye Numarası:@item.KuryeNumber</p>
+                                    <p class="card-text">Kurye ID: @item.ID</p>
+                                    <p class="card-text">Kurye Telefon Numarası: @item.CoruierPhone</p>
+                                    <input class="card-text" hidden value="@item.ID" />
+                                    <button class="btn btn-danger" onclick="RemoveCoruier(@item.ID)">Kuryeyi Sil</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            }
+            else
+            {
+                <tr></tr>
+                count = 1;
+                <td>
+                    <div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body" style="background-color:darkslategrey;border-radius:5px">
+                                    <p class="card-text">Kurye Numarası:@item.KuryeNumber</p>
+                                    <p class="card-text">Kurye ID: @item.ID</p>
+                                    <p class="card-text">Kurye Telefon Numarası: +9 @item.CoruierPhone</p>
+                                    <button class="btn btn-danger" onclick="RemoveCoruier(@item.ID)">Kuryeyi Sil</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            }
+        }
+    </table>
+</body>
+</html>
+

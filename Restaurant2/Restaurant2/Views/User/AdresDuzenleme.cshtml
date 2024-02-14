@@ -1,0 +1,175 @@
+﻿@model IEnumerable<Restaurant1.Models.User.AdresBilgi>
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body style="background-color:bisque">
+    <div id="deneme">
+
+        <div style="position:relative; top:100px;">
+            <table style="border-color:black;">
+                <tr>
+                    @foreach (var x in Model)
+                    {
+                        var adres = x.Adres;
+        <td>
+            <div style="border-color:black;width:auto">
+                <div class="col-sm-6 mb-3 mb-sm-0" style="width: auto">
+                    <div class="card" style="border-color:black; border:solid; border-radius:5px; border-width:1px;">
+                        <div class="card-body">
+                            <h5 class="card-title">@adres</h5>
+                            <hr style="border: 1px solid black;" />
+                            <p class="card-text"></p>
+                            <button class="btn btn-primary" onclick="return Düzenle(@x.ID)">DÜZENLE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>}
+                </tr>
+            </table>
+        </div>
+        <div class="container mt-5" id="adres">
+            <div class="row">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-lg-6" style="position:relative; top:100px;">
+                    <h1 class="text-center" style="position:relative; left:30px;">Yeni Adres Ekle</h1>
+                    <form>
+                        <div class="form-group col-xs-4 row" style="position:relative; top:50px; left:150px;">
+                            <label class="form-label " for="ilçe">İlçe</label>
+                            <input type="text" id="ilçe" class="form-control" value="" />
+                            <input type="text" hidden id="AdresID" value=" " />
+                        </div>
+
+                        <div class="form-group col-xs-4 row" style="position:relative; top:50px; left:180px;">
+                            <label class="form-label " for="semt">Semt</label>
+                            <input type="text" id="semt" class="form-control" value="" />
+                        </div>
+                        <br />
+                        <div class="form-group  row col-lg-12" style="position:relative; top:50px; left:180px;">
+                            <label class="form-label " for="sokak" style="position:relative; left:120px;">Sokak</label>
+                            <input type="text" id="sokak" class="form-control " style="position:relative; " value="" />
+                        </div>
+                        <div class="form-group col-xs-4 row" style="position:relative; top:70px; left:150px;">
+                            <label class="form-label " for="ApartmanAdi">Apartman Adı</label>
+                            <input type="text" id="ApartmanAdi" class="form-control" value="" />
+                        </div>
+
+                        <div class="form-group col-xs-4 row" style="position:relative; top:70px; left:180px;">
+                            <label class="form-label " for="ApNo">Apartman Numarası</label>
+                            <input type="number" id="ApNo" class="form-control" value="" />
+                        </div>
+                        <div class="row"></div>
+                        <div class="form-group col-xs-4 row" style="position:relative; top:70px; left:150px;">
+
+                            <label class="form-label " for="kat">Kat</label>
+                            <input type="number" id="kat" class="form-control" value="" />
+                        </div>
+
+                        <div class="form-group col-xs-4 row" style="position:relative; top:70px; left:180px;">
+                            <label class="form-label " for="DaNo">Daire Numarası</label>
+                            <input type="number" id="DaNo" class="form-control" value="" />
+                        </div>
+
+                        <br /><br />
+                        <br /><br />
+                        <br /><br />
+                        <br /><br />
+                    </form>
+                    <div class="btn-group row" style="position:relative; left:250px;">
+                        <button class="btn btn-success" onclick="return Güncelle()">Güncelle</button>
+                        <a href="@Url.Action("Account","User")" class="btn btn-danger">Geri Dön</a>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    function Düzenle(id) {
+
+        var sentObj = {
+            AddressID:id
+        };
+
+        $.ajax({
+            url: '@Url.Action("AddressDüzenleJson", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                console.log(data.adresBilgi.ilçe)
+                document.getElementById("ilçe").value = data.adresBilgi.ilçe;
+                document.getElementById("semt").value = data.adresBilgi.semt;
+                document.getElementById("sokak").value = data.adresBilgi.sokak;
+                document.getElementById("ApartmanAdi").value = data.adresBilgi.ApartmanAdı;
+                document.getElementById("ApNo").value = data.adresBilgi.AptNo;
+                document.getElementById("kat").value = data.adresBilgi.Kat;
+                document.getElementById("DaNo").value = data.adresBilgi.DaireNo;
+                document.getElementById("AdresID").value = data.adresBilgi.ID;
+
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function Güncelle() {
+        ilçe: document.getElementById("ilçe").value;
+        semt: document.getElementById("semt").value;
+        sokak: document.getElementById("sokak").value;
+        ApartmanAdi: document.getElementById("ApartmanAdi").value;
+        ApNo: document.getElementById("ApNo").value;
+        kat: document.getElementById("kat").value;
+        DaNo: document.getElementById("DaNo").value;
+        AdresID: document.getElementById("AdresID").value;
+
+        var Genel = semt.value + " mahallesi " + sokak.value + " sokak " + ApartmanAdi.value + " Apartmanı " + kat.value + ". kat " +
+            " Apt No:" + ApNo.value + " Daire No:" +
+            DaNo.value +" "+ ilçe.value;
+        var sentObj = {
+            Adres: Genel,
+            ilçe: ilçe.value,
+            semt: semt.value,
+            sokak: sokak.value,
+            ApartmanAdı: ApartmanAdi.value,
+            AptNo: ApNo.value,
+            Kat: kat.value,
+            DaireNo: DaNo.value,
+            ID: AdresID.value
+        };
+        console.log(sentObj)
+        $.ajax({
+            url: '@Url.Action("AddAddressJson", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function () {
+                alert("Başarıyla Eklendi")
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function () {
+                    $("#adres").html(this.responseText);
+                }
+                xhttp.open("GET", "@Url.Action("AddAddress", "User")");
+                xhttp.send();
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+
+</script>

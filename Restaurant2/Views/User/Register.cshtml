@@ -1,0 +1,262 @@
+﻿@model Restaurant1.Models.User.UserInfo
+
+@{ ViewBag.Title = "Register";
+   Layout = "~/Views/Shared/_LayoutRegister.cshtml"; }
+<html>
+<head>
+    <title>
+        Kayıt Sayfası
+    </title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .form-container {
+            background-color: #fff;
+            font-family: 'Titillium Web', sans-serif;
+            font-size: 0;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 25px -15px rgba(0, 0, 0, 0.3);
+        }
+
+            .form-container .title {
+                color: #000;
+                font-size: 25px;
+                font-weight: 600;
+                text-transform: capitalize;
+                margin: 0 0 25px;
+            }
+
+                .form-container .title:after {
+                    content: '';
+                    background-color: #00A9EF;
+                    height: 1px;
+                    width: 480px;
+                    margin: 10px 0 0;
+                    display: block;
+                    clear: both;
+                    text-align: center;
+                }
+
+            .form-container .sub-title {
+                color: #333;
+                font-size: 25px;
+                font-weight: 600;
+                text-align: center;
+                text-transform: uppercase;
+                margin: 0 0 20px;
+            }
+
+            .form-container .form-horizontal {
+                font-size: 0;
+            }
+
+                .form-container .form-horizontal .form-group {
+                    color: #333;
+                    width: 50%;
+                    padding: 0 8px;
+                    margin: 0 0 15px;
+                    display: inline-block;
+                }
+
+                    .form-container .form-horizontal .form-group:nth-child(4) {
+                        margin-bottom: 30px;
+                    }
+
+                    .form-container .form-horizontal .form-group label {
+                        font-size: 17px;
+                        font-weight: 600;
+                    }
+
+                .form-container .form-horizontal .form-control {
+                    color: #888;
+                    background: #fff;
+                    font-weight: 400;
+                    letter-spacing: 1px;
+                    height: 40px;
+                    padding: 6px 12px;
+                    border-radius: 10px;
+                    border: 2px solid #e7e7e7;
+                    box-shadow: none;
+                }
+
+                    .form-container .form-horizontal .form-control:focus {
+                        box-shadow: 0 0 5px #dcdcdc;
+                    }
+
+                .form-container .form-horizontal .check-terms {
+                    padding: 0 8px;
+                    margin: 0 0 25px;
+                }
+
+                    .form-container .form-horizontal .check-terms .check-label {
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        font-style: italic;
+                        vertical-align: top;
+                        display: inline-block;
+                    }
+
+                    .form-container .form-horizontal .check-terms .checkbox {
+                        height: 17px;
+                        width: 17px;
+                        min-height: auto;
+                        margin: 2px 8px 0 0;
+                        border: 2px solid #d9d9d9;
+                        border-radius: 2px;
+                        cursor: pointer;
+                        display: inline-block;
+                        position: relative;
+                        appearance: none;
+                        -moz-appearance: none;
+                        -webkit-appearance: none;
+                        transition: all 0.3s ease 0s;
+                    }
+
+                        .form-container .form-horizontal .check-terms .checkbox:before {
+                            content: '';
+                            height: 5px;
+                            width: 9px;
+                            border-bottom: 2px solid #00A9EF;
+                            border-left: 2px solid #00A9EF;
+                            transform: rotate(-45deg);
+                            position: absolute;
+                            left: 2px;
+                            top: 2.5px;
+                            transition: all 0.3s ease;
+                        }
+
+                        .form-container .form-horizontal .check-terms .checkbox:checked:before {
+                            opacity: 1;
+                        }
+
+                        .form-container .form-horizontal .check-terms .checkbox:not(:checked):before {
+                            opacity: 0;
+                        }
+
+                        .form-container .form-horizontal .check-terms .checkbox:focus {
+                            outline: none;
+                        }
+
+            .form-container .signin-link {
+                color: #333;
+                font-size: 14px;
+                width: calc(100% - 190px);
+                margin-right: 30px;
+                display: inline-block;
+                vertical-align: top;
+            }
+
+                .form-container .signin-link a {
+                    color: #00A9EF;
+                    font-weight: 600;
+                    transition: all 0.3s ease 0s;
+                }
+
+                    .form-container .signin-link a:hover {
+                        text-decoration: underline;
+                    }
+
+            .form-container .form-horizontal .signup {
+                color: #fff;
+                background: #00A9EF;
+                font-size: 15px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                width: 180px;
+                padding: 8px 15px 9px;
+                border-radius: 10px;
+                transition: all 0.3s ease 0s;
+            }
+
+            .form-container .form-horizontal .btn:hover,
+            .form-container .form-horizontal .btn:focus {
+                text-shadow: 0 0 5px rgba(0,0,0,0.5);
+                box-shadow: 3px 3px rgba(0,0,0,0.15),5px 5px rgba(0,0,0,0.1);
+                outline: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-bg">
+
+        <div class="container text-center mt-5">
+            <div class="row">
+                <div class="col-md-offset-3 col-md-6">
+                    <div class="form-container">
+                        <h3 class="title">Kayıt ol</h3>
+                        <form class="form-horizontal" method="post">
+                            <div class="form-group">
+                                <label>Ad-Soyad</label>
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "User Name", required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Email Address", @type = "email", required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>Şifre</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @minlength = 4, @maxlength = 12, required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>Telefon Numarası</label>
+                                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @type = "number", @placeholder = "Phone Number", @minlength = 11, @maxlength = 11, required = "required" })
+                            </div>
+
+
+
+
+                            <h4 class="sub-title">Adres</h4>
+                            <div class="form-group">
+                                <label>Semt</label>
+                                @Html.TextBoxFor(m => m.semt, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>Sokak</label>
+                                @Html.TextBoxFor(m => m.sokak, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>İlçe</label>
+                                @Html.TextBoxFor(m => m.ilçe, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>Apartman Adı</label>
+                                @Html.TextBoxFor(m => m.ApartmanAdı, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>Apartman No</label>
+                                @Html.TextBoxFor(m => m.AptNo, new { @class = "form-control", @type = "number", required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>Kat</label>
+                                @Html.TextBoxFor(m => m.Kat, new { @class = "form-control", @type = "number", required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>Daire No</label>
+                                @Html.TextBoxFor(m => m.DaireNo, new { @class = "form-control", @type = "number", required = "required" })
+                            </div>
+                            <div class="check-terms">
+                                <input type="checkbox" class="checkbox" required>
+                                <span class="check-label">Şartları kabul ediyorum</span>
+                            </div>
+
+                            <input type="submit" class="btn signup" value="Kayıt Ol" /><br />
+                            @if (Model.Error != null)
+                            {
+                                <div class="alert alert-danger mt-2" style="width:340px;left:60px">
+                                    <i class="bi-exclamation-octagon-fill" style="font-size:15px;font-family:Arial"> Hata!  @Model.Error</i>
+                                </div>
+                             }
+                            <br />
+                            <span class="signin-link">Zaten bir hesabın varsa? <a href="~/User/Index">Giriş Yap</a></span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+﻿@using Restaurant1.Models
+@model IEnumerable<Restaurant1.Models.admin.DetailsInfo>
+@{ int controller = 0; }
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="~/Scripts/Css/FoodPartialCss.css" />
+</head>
+<body>
+    <table>
+        @if (Model.Count() > 1)
+        {
+            foreach (var c in Model)
+            {
+                if (controller == 2)
+                {
+
+                    controller = 0;
+    <td>
+        <div class='container-fluid'>
+            <div>
+                <img style="width:250px;height:250px" class='mx-auto img-thumbnail'
+                     src="@c.FoodPicture" />
+                <div class="card-body text-center mx-auto">
+                    <div class='cvp'>
+                        <h5 class="card-title font-weight-bold">@c.FoodName</h5>
+                        <p class="card-text">@c.FoodPrice ₺</p>
+                        <p class="btn btn-warning" style="width:148px">@Html.ActionLink("Detayları Görüntüle", "Recipe", new { id = c.FoodID }, new { style = "color:black;text-decoration:none" })</p>
+                        <p></p>
+                        <button style="width:148px" class="btn btn-success" onclick="return add(@c.FoodID)">Sepete Ekle</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </td>
+                            <tr></tr>
+ }
+
+                        else
+                        {
+                            controller++;
+    <td>
+        <div class='container-fluid'>
+            <div>
+                <img style="width:250px;height:250px" class='mx-auto img-thumbnail' src="@c.FoodPicture" />
+                <div class="card-body text-center mx-auto">
+                    <div class='cvp'>
+                        <h5 class="card-title font-weight-bold">@c.FoodName</h5>
+                        <p class="card-text">@c.FoodPrice ₺</p>
+                        <p class="btn btn-warning" style="width:148px">@Html.ActionLink("Detayları Görüntüle", "Recipe", new { id = c.FoodID }, new { style = "color:black;text-decoration:none" })</p>
+                        <p></p>
+                        <button style="width:148px" class="btn btn-success" onclick="return add(@c.FoodID)">Sepete Ekle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+}
+}
+}
+    </table>
+</body>
+</html>

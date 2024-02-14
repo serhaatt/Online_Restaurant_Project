@@ -1,0 +1,163 @@
+﻿@{
+    ViewBag.Title = "AFood";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<html>
+<head>
+    <style>
+        #btn1 {
+            position: absolute;
+            left: 35px;
+        }
+
+        #btn2 {
+            position: absolute;
+            right: 40px;
+        }
+
+        .nav-link {
+            position: relative;
+            top: 0px;
+            left: 0px;
+            border-width: 0;
+            width: 200px;
+            height: 50px;
+            background-color: #a7bcb9;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <div class="col-lg-3">
+            @Html.Action("AFilterPartial", "Admin")
+        </div>
+        <div class="col-lg-9">
+            <div id="Yemek">
+                <center>
+                    <h1 class="menu">MENÜ</h1>
+                </center>
+                <div>
+                    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #a7bcb9">
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item active">
+                                    <button class="nav-link"><b>@Html.ActionLink("Başlangıçlarımız", "AFood", new { str = "starter" }, new { style = "color:black;text-decoration:none; font-size:20px" })</b></button>
+                                </li>
+
+                                <li class="nav-item active">
+                                    <button class="nav-link"><b>@Html.ActionLink("Ana Yemeklerimiz", "AFood", new { str = "main" }, new { style = "color:black;text-decoration:none; font-size:20px" })</b></button>
+                                </li>
+                                <li class="nav-item active">
+                                    <button class="nav-link"><b>@Html.ActionLink("Tatlılarımız", "AFood", new { str = "dessert" }, new { style = "color:black;text-decoration:none; font-size:20px" })</b></button>
+                                </li>
+                                <li class="nav-item active">
+                                    <button class="nav-link"><b>@Html.ActionLink("İçeceklerimiz", "AFood", new { str = "drink" }, new { style = "color:black;text-decoration:none; font-size:20px" })</b></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div id="a">
+                @Html.Action("AFoodPartials", "Admin", new { str = ViewData["str"] })
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script>
+    function filtrele() {
+        var sentObj = {
+            SearchTerm: document.getElementById("SearchTerm").value,
+            MinPrice: document.getElementById("MinPrice").value,
+            MaxPrice: document.getElementById("MaxPrice").value
+        };
+        console.log(sentObj)
+        $.ajax({
+            url: '@Url.Action("Filter", "Admin")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+           success: function () {
+
+                const xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "@Url.Action("AFoodPartials", "Admin")");
+                xhttp.send();
+                xhttp.onload = function () {
+                    $("#a").html(this.responseText);
+                }
+
+
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+
+        });
+
+    }
+    function filter() {
+        var sentObj = {
+            SearchTerm:"",
+            MinPrice:"",
+            MaxPrice:"",
+        };
+        console.log(sentObj)
+        $.ajax({
+            url: '@Url.Action("Filter", "Admin")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+           success: function () {
+
+                const xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "@Url.Action("AFoodPartials", "Admin")");
+                xhttp.send();
+                xhttp.onload = function () {
+                    $("#a").html(this.responseText);
+               }
+               document.getElementById("SearchTerm").value = "";
+               document.getElementById("MinPrice").value = "";
+               document.getElementById("MaxPrice").value = "";
+
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+
+        });
+
+    }
+
+    function add(FoodID) {
+        var sentObj = {
+            FoodID: FoodID
+        };
+
+        $.ajax({
+            url: '@Url.Action("Add", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message)
+                    const xhttp = new XMLHttpRequest();
+                    xhttp.onload = function () {
+                        $("#Yemek").html(this.responseText);
+                    }
+                }
+                else {
+                    alert(data.hataMesaji);
+                }
+            },
+        });
+    }
+</script>

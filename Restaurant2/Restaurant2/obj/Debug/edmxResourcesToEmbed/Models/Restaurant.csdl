@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Addresses">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="Ilce" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Semt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Sokak" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ApartmanAdı" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AptNo" Type="Int32" />
+    <Property Name="Kat" Type="Int32" />
+    <Property Name="DaireNo" Type="Int32" />
+    <NavigationProperty Name="users" Relationship="Self.FK_Addresses_users" FromRole="Addresses" ToRole="users" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="AdminID" />
+    </Key>
+    <Property Name="AdminID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AdminName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AdminMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AdminPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdminOrder">
+    <Key>
+      <PropertyRef Name="AdminOrderID" />
+    </Key>
+    <Property Name="AdminOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="FoodID" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+    <Property Name="OrderSituation" Type="Int32" />
+    <Property Name="OrderAmount" Type="Int32" />
+    <Property Name="OrderAddress" Type="Int32" />
+    <Property Name="OrderPhone" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Food" Relationship="Self.FK_AdminOrder_Food" FromRole="AdminOrder" ToRole="Food" />
+    <NavigationProperty Name="users" Relationship="Self.FK_AdminOrder_users" FromRole="AdminOrder" ToRole="users" />
+  </EntityType>
+  <EntityType Name="Food">
+    <Key>
+      <PropertyRef Name="FoodID" />
+    </Key>
+    <Property Name="FoodID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FoodCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FoodName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FoodPrice" Type="Int32" Nullable="false" />
+    <Property Name="FoodCal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FoodFat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FoodCar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FoodPro" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FoodSalt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FoodSugar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FoodMin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FoodPicture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AdminOrder" Relationship="Self.FK_AdminOrder_Food" FromRole="Food" ToRole="AdminOrder" />
+    <NavigationProperty Name="Inventory" Relationship="Self.FK_Inventory_Food" FromRole="Food" ToRole="Inventory" />
+    <NavigationProperty Name="orders" Relationship="Self.FK_orders_Food" FromRole="Food" ToRole="orders" />
+    <NavigationProperty Name="Recipe" Relationship="Self.FK_Recipe_Food" FromRole="Food" ToRole="Recipe" />
+  </EntityType>
+  <EntityType Name="Inventory">
+    <Key>
+      <PropertyRef Name="InventoryID" />
+    </Key>
+    <Property Name="InventoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InventoryPiece" Type="Int32" Nullable="false" />
+    <Property Name="FoodID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Food" Relationship="Self.FK_Inventory_Food" FromRole="Inventory" ToRole="Food" />
+  </EntityType>
+  <EntityType Name="Kurye">
+    <Key>
+      <PropertyRef Name="KuryeID" />
+    </Key>
+    <Property Name="KuryeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KuryeNumber" Type="Int32" />
+    <Property Name="KuryePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KuryePhone" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="orders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="FoodID" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Int32" />
+    <NavigationProperty Name="Food" Relationship="Self.FK_orders_Food" FromRole="orders" ToRole="Food" />
+    <NavigationProperty Name="users" Relationship="Self.FK_orders_users" FromRole="orders" ToRole="users" />
+  </EntityType>
+  <EntityType Name="Recipe">
+    <Key>
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="RecipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FoodRecipe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FoodID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Food" Relationship="Self.FK_Recipe_Food" FromRole="Recipe" ToRole="Food" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserAdress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserPhone" Type="String" MaxLength="11" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Addresses" Relationship="Self.FK_Addresses_users" FromRole="users" ToRole="Addresses" />
+    <NavigationProperty Name="AdminOrder" Relationship="Self.FK_AdminOrder_users" FromRole="users" ToRole="AdminOrder" />
+    <NavigationProperty Name="orders" Relationship="Self.FK_orders_users" FromRole="users" ToRole="orders" />
+    <Property Name="OrderCount" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_Addresses_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Addresses" Type="Self.Addresses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Addresses">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminOrder_Food">
+    <End Role="Food" Type="Self.Food" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AdminOrder" Type="Self.AdminOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="FoodID" />
+      </Principal>
+      <Dependent Role="AdminOrder">
+        <PropertyRef Name="FoodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminOrder_users">
+    <End Role="users" Type="Self.users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AdminOrder" Type="Self.AdminOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="AdminOrder">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inventory_Food">
+    <End Role="Food" Type="Self.Food" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="FoodID" />
+      </Principal>
+      <Dependent Role="Inventory">
+        <PropertyRef Name="FoodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_orders_Food">
+    <End Role="Food" Type="Self.Food" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="FoodID" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="FoodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Recipe_Food">
+    <End Role="Food" Type="Self.Food" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="FoodID" />
+      </Principal>
+      <Dependent Role="Recipe">
+        <PropertyRef Name="FoodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_orders_users">
+    <End Role="users" Type="Self.users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="orders" Type="Self.orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="orders">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RestaurantEntities10" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Addresses" EntityType="Self.Addresses" />
+    <EntitySet Name="Admin" EntityType="Self.Admin" />
+    <EntitySet Name="AdminOrder" EntityType="Self.AdminOrder" />
+    <EntitySet Name="Food" EntityType="Self.Food" />
+    <EntitySet Name="Inventory" EntityType="Self.Inventory" />
+    <EntitySet Name="Kurye" EntityType="Self.Kurye" />
+    <EntitySet Name="orders" EntityType="Self.orders" />
+    <EntitySet Name="Recipe" EntityType="Self.Recipe" />
+    <EntitySet Name="users" EntityType="Self.users" />
+    <AssociationSet Name="FK_Addresses_users" Association="Self.FK_Addresses_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="Addresses" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminOrder_Food" Association="Self.FK_AdminOrder_Food">
+      <End Role="Food" EntitySet="Food" />
+      <End Role="AdminOrder" EntitySet="AdminOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminOrder_users" Association="Self.FK_AdminOrder_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="AdminOrder" EntitySet="AdminOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inventory_Food" Association="Self.FK_Inventory_Food">
+      <End Role="Food" EntitySet="Food" />
+      <End Role="Inventory" EntitySet="Inventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_orders_Food" Association="Self.FK_orders_Food">
+      <End Role="Food" EntitySet="Food" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Recipe_Food" Association="Self.FK_Recipe_Food">
+      <End Role="Food" EntitySet="Food" />
+      <End Role="Recipe" EntitySet="Recipe" />
+    </AssociationSet>
+    <AssociationSet Name="FK_orders_users" Association="Self.FK_orders_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="orders" EntitySet="orders" />
+    </AssociationSet>
+    <EntitySet Name="Kupon" EntityType="RestaurantModel.Kupon" />
+  </EntityContainer>
+  <EntityType Name="Kupon">
+    <Key>
+      <PropertyRef Name="KuponID" />
+    </Key>
+    <Property Name="KuponID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kupon1" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Durum" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="KuponName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KuponTutar" Type="Int32" Nullable="false" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,102 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Login";
+}
+
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('/Resimler/arkaplan5.jpeg'); /* Arka plan resminin URL'sini buraya ekleyin */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 1vh;
+
+        }
+        .container {
+            position: relative;
+            top: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .container .glass {
+                position: relative;
+                width: 220px;
+                height: 240px;
+                background: linear-gradient(#fff2, transparent);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 25px 25px rgba(0, 0, 0, 0.25);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: 0.5s;
+                border-radius: 10px;
+                margin: 0 -45px;
+                backdrop-filter: blur(10px);
+                transform: rotate(calc(var(--r) * 1deg));
+            }
+
+            .container:hover .glass {
+                transform: rotate(0deg);
+                margin: 0 10px;
+            }
+
+            .container .glass::before {
+                content: attr(data-text);
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 40px;
+                background: rgba(255, 255, 255, 0.05);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+            }
+
+            .container .glass svg {
+                font-size: 2.5em;
+                fill: #fff;
+            }
+    </style>
+</head>
+<body>
+    <div style="justify-content:center;text-align:center;position:absolute;top:7.5%;left:36%">
+        <img src="~/Resimler/logo1.png" />
+    </div>
+    <div class="container justify-content-center" style="text-align:center;justify-content:center">
+        <a href="/User/Index">
+            <div data-text="Kullanıcı Girişi" style="--r:-15;" class="glass">
+                <img src="~/Resimler/kullanıcı.png" style="width:75px;height:75px" />
+            </div>
+        </a>
+        <a href="/Admin/Index">
+            <div data-text="Admin Girişi" style="--r:5;" class="glass">
+                <svg viewBox="0 0 640 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                    <img src="~/Resimler/admin.png" style="width:75px;height:75px" />
+                </svg>
+            </div>
+        </a>
+        <a href="/Kurye/Index">
+            <div data-text="Kurye Girişi" style="--r:25;" class="glass">
+                <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                    <img src="~/Resimler/kurye.png" style="width:75px;height:75px" />
+                </svg>
+            </div>
+        </a>
+        <a href="/User/Food">
+            <div data-text="Misafir Girişi" style="--r:25;" class="glass">
+                <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                    <img src="~/Resimler/guest.png" style="width:75px;height:75px" />
+                </svg>
+            </div>
+        </a>
+    </div>
+</body>
+</html>

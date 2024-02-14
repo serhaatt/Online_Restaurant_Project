@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "FoodDetail";
+}
+
+@model Restaurant1.Models.Food
+<html>
+<body style="background-color: #a7bcb8">
+    <center>
+        <h1>Yemek Detayları</h1>
+    </center>
+
+    <div id="detay">
+        @Html.Action("DetailPartial", "Admin")
+    </div>
+
+    @Html.ActionLink("Geri Dön", "AFood")
+
+    <center>
+        <button onclick="return Update()">Kaydet</button>
+    </center>
+
+
+</body>
+</html>
+
+<script>
+    function Update() {
+        var fileInput = document.getElementById('upload');
+
+        var sentObj = {
+            FoodID: document.getElementById("id").value,
+            FoodCategory: document.getElementById("cat").value,
+            FoodName: document.getElementById("name").value,
+            FoodPrice: document.getElementById("price").value,
+            FoodCal: document.getElementById("cal").value,
+            FoodFat: document.getElementById("fat").value,
+            FoodCar: document.getElementById("car").value,
+            FoodPro: document.getElementById("pro").value,
+            FoodSalt: document.getElementById("salt").value,
+            FoodSugar: document.getElementById("sugar").value,
+            FoodMin: document.getElementById("min").value,
+            FoodRecipe: document.getElementById("recipe").value,
+            InventoryPiece: document.getElementById("piece").value,
+            Image:fileInput.files[0].name,
+        };
+
+        $.ajax({
+            url: '@Url.Action("Update", "Admin")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function () {
+                alert("Başarıyla Değiştirildi!");
+
+                var y = $("#idd").data("id"); // Veriyi veri özniteliğinden al
+
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function () {
+                    $("#detay").html(this.responseText);
+                };
+
+                xhttp.open("GET", "@Url.Action("DetailPartial", "Admin")?id=" + y);
+                xhttp.send();
+
+
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+
+    }
+</script>

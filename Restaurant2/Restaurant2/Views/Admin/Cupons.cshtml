@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Restaurant1.Models.admin.Cupon>
+@{
+    ViewBag.Title = "AddCupon";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<html>
+<head>
+    <style>
+        .box {
+            position: relative;
+            top: 90px;
+            right: 120px;
+            height: 40px;
+            width: 280px;
+            border-radius: 8px;
+        }
+
+        .box_button {
+            position: relative;
+            top: 88px;
+            right: 50px;
+            height: 40px;
+            width: 100px;
+            border-radius: 8px;
+        }
+
+        .title {
+            position: relative;
+            left: 450px;
+            height: 40px;
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2 class="title">KUPONLAR</h2>
+    </div>
+    <div>
+        <div>
+            <input class="box" id="cuponName" placeholder="Kupon İsmini Giriniz" />
+            <input class="box" id="cuponPrice" placeholder="Kupon Tutarını Giriniz" />
+            <input class="box" id="cuponCode" placeholder="Kupon Kodunu Giriniz" />
+            <button class="box_button btn btn-success" onclick="return AddCupon()">Kupon Ekle</button>
+            <button class="box_button btn btn-warning" onclick="return CreateCupon()">Kupon Yarat</button>
+        </div>
+    </div>
+    <h3 style="position:relative;top:100px;right:100px">Şu anda aktif olan kuponlar</h3>
+    <div class="col-lg-3" id="cupons">
+        @Html.Action("CuponPartial", "Admin")
+    </div>
+</body>
+</html>
+<script>
+    function CreateCupon() {
+        var characters = "ABCDEFGHIJKLMNOPQRSTUVWXTZ1234567890";
+        var lenString = 7;
+        var randomstring = '';
+        for (var i = 0; i < lenString; i++) {
+            var rnum = Math.floor(Math.random() * characters.length);
+            randomstring += characters.substring(rnum, rnum + 1);
+        }
+        document.getElementById("cuponCode").value = randomstring;
+    }
+    function AddCupon() {
+        var sentObj = {
+            KuponName:document.getElementById("cuponName").value,
+            KuponKodu: document.getElementById("cuponCode").value,
+            KuponTutarı: document.getElementById("cuponPrice").value,
+        }
+
+        $.ajax({
+            url: '@Url.Action("AddCpn", "Admin")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message)
+                    const xhttp = new XMLHttpRequest();
+                    xhttp.onload = function () {
+                        $("#cupons").html(this.responseText);
+                    }
+                     xhttp.open("GET", "@Url.Action("CuponPartial", "Admin")");
+                    xhttp.send();
+                }
+                else {
+                    alert(data.hataMesaji);
+                }
+            },
+        });
+    }
+    function RemoveCpn(id) {
+        var sentObj = {
+            ID:id
+        }
+
+        $.ajax({
+            url: '@Url.Action("RemoveCpn", "Admin")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message)
+                    const xhttp = new XMLHttpRequest();
+                    xhttp.onload = function () {
+                        $("#cupons").html(this.responseText);
+                    }
+                     xhttp.open("GET", "@Url.Action("CuponPartial", "Admin")");
+                    xhttp.send();
+                }
+                else {
+                    alert(data.hataMesaji);
+                }
+            },
+        });
+    }
+</script>

@@ -1,0 +1,58 @@
+﻿@model Restaurant1.Models.admin.Image_DetailsInfo
+<center> <img width="400px" style="border-radius:10px" height="300px" src="@Model.Image" /> 
+
+</center>
+<br />
+<center><input type="file"  id="upload"/></center>
+<br />
+    <input type="hidden" id="idd" data-id="@Model.Details.FoodID" />
+<table class="table">
+
+    <tr>
+        <th>Yemek İsmi</th>
+        <th>Yemek Kategorisi</th>
+        <th>Fiyat</th>
+        <th>Kalori</th>
+        <th>Yağ</th>
+    </tr>
+
+    <tr>
+        <td><input id="name" value="@Model.Details.FoodName" /></td>
+        <td><input readonly="readonly" id="cat" value="@Model.Details.FoodCategory" /></td>
+        <td><input id="price" value="@Model.Details.FoodPrice" /></td>
+        <td><input id="cal" value="@Model.Details.FoodCal" /></td>
+        <td><input id="fat" value="@Model.Details.FoodFat" /></td>
+    </tr>
+    <tr>
+        <th>Karbonhidrat</th>
+        <th>Protein</th>
+        <th>Tuz</th>
+        <th>Şeker</th>
+        <th>Mineral</th>
+    </tr>
+    <tr>
+
+        <td><input id="car" value="@Model.Details.FoodCar" /></td>
+        <td><input id="pro" value="@Model.Details.FoodPro" /></td>
+        <td><input id="salt" value="@Model.Details.FoodSalt" /></td>
+        <td><input id="sugar" value="@Model.Details.FoodSugar" /></td>
+        <td><input id="min" value="@Model.Details.FoodMin" /></td>
+
+    </tr>
+    <tr>
+        <th rowspan="2" colspan="4">Tarif</th>
+        <th rowspan="2">Ürün Sayısı</th>
+    </tr>
+    <tr>
+        <td><input id="id" style="display:none" value="@Model.Details.FoodID" /></td>
+    </tr>
+    <tr>
+    </tr>
+</table>
+<table class="table">
+    <tr>
+        <td><textarea id="recipe" style="width:830px;height:300px;">@Model.Details.FoodRecipe</textarea></td>
+        <td><input id="piece" value="@Model.Details.InventoryPiece" /></td>
+    </tr>
+</table>
+

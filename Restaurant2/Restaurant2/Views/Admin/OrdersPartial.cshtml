@@ -1,0 +1,174 @@
+﻿@model IEnumerable<Restaurant1.Models.admin.OrderNames>
+@{ var cn = Model.First().CustomerName;
+    var date = Model.First().date;
+    double toplam = 0;
+    DateTime d = Model.First().date;
+    int i = Model.First().UserID;
+    int count = 0;
+ }
+<center>
+    <h1>Müşteri Siparişleri</h1>
+</center>
+    <table class="table">
+        <thead class="thead-dark"> 
+            <tr>
+                <th>@Model.First().CustomerName  @Model.First().date.ToString("dd/MM/yyyy") @Model.First().date.ToString("HH:mm") Tarihli Siparişi</th>
+                <th style="vertical-align:middle;"> Yemek Adet</th>
+                <th style="vertical-align:middle;"> Fiyat(₺)</th>
+                <th style="text-align: center; vertical-align: middle;"> Adres</th>
+                <th style="vertical-align:middle;"> Telefon Numarası</th>
+                <th style="vertical-align:middle;"> Sipariş Durumu: </th>
+                <th style="vertical-align:middle;">@Model.First().Situation</th>
+                @if (Model.First().Situation == "Teslim Edildi" || Model.First().Situation == "İptal Edildi" || Model.First().Situation == "Yola Çıktı" || Model.First().Situation == "Kurye Bekleniyor")
+                {
+                    <th><button hidden></button></th>
+                }
+                else if (Model.First().Situation == "Onay Bekliyor")
+                {
+                    <th style="vertical-align:middle;">
+                        <button class="btn btn-success" onclick="return Situation('@d','@i','0')">Onayla</button>
+                    </th >
+                    <th style="vertical-align:middle;"><button class="btn btn-danger" onclick="return Situation('@d','@i','5')">İptal Et</button></th>
+
+
+
+                }
+                else
+                {
+                    <th style="vertical-align:middle;">
+                        <button class="btn btn-success" onclick="return Situation('@d', '@i','1')">@Model.First().Sit</button>
+                    </th>
+                }
+                <td>
+                    <input id="PID" hidden value="@Model.First().UserID" />
+                    <input id="Pdate" hidden value="@Model.First().date" />
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </thead>
+            @{ foreach (var c in Model)
+                {
+                    int price = 0;
+                    if (date == c.date && cn == c.CustomerName)
+                    {
+                        price = @c.Price * @c.Amount;
+                        toplam += price;
+                        <tr>
+                            <td>@c.FoodName</td>
+                            <td>@c.Amount Adet</td>
+                            <td>@price ₺</td>
+                            @{
+                                if (count == 0)
+                                {
+                                    <td>@c.Adres</td>
+                                    count += 1;
+                                    <td>@c.Phone</td>
+                                }
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+
+
+                        </tr>
+
+                    }
+                    else
+                    {
+                        count = 0;
+                        <tr>
+                            <td style="font-weight:bold">Toplam :</td>
+                            <td></td>
+                            <td style="font-weight:bold">@toplam ₺</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>@c.CustomerName  @c.date.ToString("dd/MM/yyyy") @c.date.ToString("HH:mm") Tarihli Siparişi</th>
+                                <th style="vertical-align:middle;"> Yemek Adet</th>
+                                <th style="vertical-align:middle;"> Fiyat(₺)</th>
+                                <th style="text-align: center; vertical-align: middle; "> Adres</th>
+                                <th style="vertical-align:middle;"> Telefon Numarası</th>
+                                <th style="vertical-align:middle;"> Sipariş Durumu: </th>
+                                <th style="vertical-align:middle;"> @c.Situation</th>
+                                @{
+                                    if (c.Situation == "Teslim Edildi" || c.Situation == "İptal Edildi" || c.Situation == "Yola Çıktı" || c.Situation == "Yola Çıktı")
+                                    {
+                                        <th><button hidden></button></th>
+                                    }
+                                    else if (c.Situation == "Onay Bekliyor")
+                                    {
+
+                                        <th style="vertical-align:middle;">
+                                            <button class="btn btn-success" onclick="return Situation('@c.date', '@c.UserID','0')">Onayla</button>
+
+                                        </th>
+                                        <th style="vertical-align:middle;"> <button class="btn btn-danger" onclick="return Situation('@c.date', '@c.UserID','5')">İptal Et</button></th>
+                                    }
+                                    else
+                                    {
+                                        <th style="vertical-align:middle;">
+                                            <button class="btn btn-success" onclick="return Situation('@c.date', '@c.UserID','1')">@c.Sit</button>
+                                        </th>
+                                    }
+                                    <td>
+                                        <input id="PID" hidden value="@c.UserID" />
+                                        <input id="Pdate" hidden value="@c.date" />
+                                    </td>
+                                }
+                            </tr>
+                        </thead>
+                        toplam = 0;
+                        price = @c.Price * @c.Amount;
+                        toplam += price;
+                        <tr>
+                            <td>@c.FoodName</td>
+                            <td>@c.Amount Adet</td>
+                            <td>@price ₺</td>
+
+                            @{
+                                if (count == 0)
+                                {
+                                    <td>@c.Adres</td>
+                                    <td>@c.Phone</td>
+                                    count += 1;
+
+                                }
+                            }
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+ }
+                    date = c.date;
+                    cn = c.CustomerName;
+                }
+            }
+            <tr>
+                <td style="font-weight:bold">Toplam :</td>
+                <td></td>
+                <td style="font-weight:bold">@toplam ₺</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+</table>
+
+

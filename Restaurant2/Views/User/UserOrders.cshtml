@@ -1,0 +1,162 @@
+﻿@model IEnumerable<Restaurant1.Models.User.Cart>
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/Scripts/Css/EmptyCart.css" />
+</head>
+<body style="background-color: #a7bcb9; ">
+    <br />
+    @{
+        if (Model.Count() != 0)
+        {
+            float toplam = 0;
+            float sonTutar = 0;
+            var date = Model.First().Date;
+            <center>
+                <h1><b>Geçmiş Siparişlerim</b></h1>
+            </center> <br />
+            <br />
+            <table class="table" border="0">
+                <thead class="thead-dark">
+                <th style="font-size:20px">@Model.First().Date.ToString("dd/MM/yyyy HH:mm") Tarihli Siparişiniz</th>
+                <th style="font-size:20px">Yemek</th>
+                <th style="font-size:20px"> Adet</th>
+                <th style="font-size:20px"> Fiyat</th>
+                <th style="font-size:20px"> Sipariş Durumu:</th>
+                <th style="font-size:20px; "> @Model.First().Situation</th>
+                </thead>
+                @foreach (var c in Model)
+                {
+                    int price = 0;
+                    if (date == c.Date)
+                    {
+                        sonTutar = c.OrderPrice;
+                        price = @c.FoodPrice * @c.Amount;
+                        toplam += price;
+                        <tr>
+                            <td><center><div class="mr-1"><img class="rounded" src="@c.FoodPicture" width="120"></div></center></td>
+                            <td style="position:relative; top:20px">@c.FoodName</td>
+                            <td style="position:relative; top:20px">@c.Amount Adet</td>
+                            <td id="price" style="position:relative; top:20px">@price ₺</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                        </tr>
+                    }
+                    else
+                    {
+
+                        <tr>
+                            <td>Toplam :</td>
+                            <td></td>
+                            <td></td>
+                            <td>@toplam ₺</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        if (toplam != sonTutar)
+                        {
+                            float off = sonTutar - toplam;
+                            <tr>
+                                <td>İndirim Tutarı:</td>
+                                <td></td>
+                                <td></td>
+                                <td>@off ₺</td>
+
+                            </tr>
+
+                        };
+                        <tr>
+                            <td style="font-weight:bold">Ödenen Tutar</td>
+                            <td></td>
+                            <td></td>
+                            <td style="font-weight:bold">@sonTutar ₺</td>
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="font-size:20px">@c.Date.ToString("dd/MM/yyyy HH:mm") Tarihli Siparişiniz</th>
+                                <th style="font-size:20px">Yemek</th>
+                                <th style="font-size:20px"> Adet</th>
+                                <th style="font-size:20px"> Fiyat</th>
+                                <th style="font-size:20px"> Sipariş Durumu: </th>
+                                <th style="font-size:20px; "> @c.Situation</th>
+
+
+                            </tr>
+                        </thead>
+                        toplam = 0;
+                        price = @c.FoodPrice * @c.Amount;
+                        toplam += price;
+                        <tr></tr>
+                        <tr>
+
+                            <td><center><div class="mr-1"><img class="rounded" src="@c.FoodPicture" width="120"></div></center></td>
+                            <td style="position:relative; top:20px">@c.FoodName</td>
+                            <td style="position:relative; top:20px">@c.Amount Adet</td>
+                            <td id="price" style="position:relative; top:20px">@price ₺</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        sonTutar = c.OrderPrice;
+                    }
+                    date = c.Date;
+                }
+                <tr>
+                    <td style="font-weight:bold">Toplam :</td>
+                    <td></td>
+                    <td></td>
+                    <td style="font-weight:bold">@toplam ₺</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                @if (toplam != sonTutar)
+                {
+                    float off = sonTutar - toplam;
+                    <tr>
+                        <td>İndirim Tutarı:</td>
+                        <td></td>
+                        <td></td>
+                        <td>@off ₺</td>
+
+                    </tr>
+
+                }
+                <tr>
+                    <td style="font-weight:bold">Ödenen Tutar</td>
+                    <td></td>
+                    <td></td>
+                    <td style="font-weight:bold">@sonTutar ₺</td>
+                </tr>
+
+
+            </table>
+        }
+        else
+        {
+            <div class="container-fluid  mt-100" style="background-color: #a7bcb9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body cart">
+                                <div class="col-sm-12 empty-cart-cls text-center">
+                                    <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                                    <h3><strong>Geçmiş Siparişiniz Bulunmamaktadır...</strong></h3>
+                                    <h4>Haydi! Bir Şeyler Sipariş Edelim!!</h4>
+                                    <a href="/User/Food" class="btn btn-primary cart-btn-transform m-3" data-abc="true">Listeye Dön</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</body>
+</html>
+
+

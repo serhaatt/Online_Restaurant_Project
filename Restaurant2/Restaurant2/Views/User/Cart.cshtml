@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Restaurant1.Models.User.Sepet>
+
+@{
+    ViewBag.Title = "Cart";
+}
+
+<html>
+<head>
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+    <div id="sepet">
+        @Html.Action("CartPartial", "User")
+    </div>
+</body>
+</html>
+
+
+<script>
+    function remove(FoodID) {
+        var sentObj = {
+            FoodID: FoodID
+        };
+
+        $.ajax({
+            url: '@Url.Action("Remove", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function () {
+
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function () {
+                    $("#sepet").html(this.responseText);
+                }
+                xhttp.open("GET", "@Url.Action("CartPartial", "User")");
+                xhttp.send();
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+
+    }
+    function increase(FoodID) {
+        var sentObj = {
+            FoodID: FoodID
+        };
+        $.ajax({
+            url: '@Url.Action("IncreaseAmount", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.success) {
+                    const xhttp = new XMLHttpRequest();
+                    xhttp.onload = function () {
+                        $("#sepet").html(this.responseText);
+                    }
+                    xhttp.open("GET", "@Url.Action("CartPartial", "User")");
+                    xhttp.send();
+                }
+                else {
+                    alert(data.hataMesaji);
+                }
+            },
+        });
+    }
+    function decrease(FoodID) {
+        var sentObj = {
+            FoodID: FoodID
+        };
+
+        $.ajax({
+            url: '@Url.Action("DecreaseAmount", "User")',
+            data: JSON.stringify(sentObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function () {
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function () {
+                    $("#sepet").html(this.responseText);
+                }
+                xhttp.open("GET", "@Url.Action("CartPartial", "User")");
+                xhttp.send();
+            },
+        });
+    }
+
+</script>

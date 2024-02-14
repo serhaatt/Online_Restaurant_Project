@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Restaurant1.Models.User.Sepet>
+@{ 
+    double toplam = 0;
+    var date = Model.First().Date; 
+    }
+<html>
+<body style="background-color: #a7bcb9; ">
+    <br />
+    <center>
+        <b><h1  ">Geçmiş Siparişlerim</h1></b>
+    </center>    <br />
+    <br />
+    <table class="table" border="0">
+        <tr>
+        <thead class="thead-dark">
+        <th style="font-size:20px">@Model.First().Date.ToString("dd/MM/yyyy HH:mm") Tarihli Siparişiniz</th>
+        <th style="font-size:20px">Yemek</th>
+        <th style="font-size:20px"> Adet</th>
+        <th style="font-size:20px"> Fiyat</th>
+        <th style="font-size:20px"> Sipariş Durumu:</th>
+        <th style="font-size:20px; "> @Model.First().Situation</th>
+        </thead>
+        </tr>
+        @*<tr>
+            <th><h3>Yemek Adı</h3></th>
+            <th><h3>Fiyat</h3></th>
+            <th><h3>Tarih</h3></th>
+            <th><h3>Sipariş Durumu</h3></th>
+        </tr>*@
+        @foreach (var c in Model)
+        {
+            int price = 0;
+            if (date == c.Date)
+            {
+                price = @c.FoodPrice * @c.Amount;
+                toplam += price;
+                <tr>
+
+                    <td><center><div class="mr-1"><img class="rounded" src="@c.FoodPicture" width="120"></div></center></td>
+                    <td style="position:relative; top:20px">@c.FoodName</td>
+                    <td style="position:relative; top:20px">@c.Amount Adet</td>
+                    <td id="price" style="position:relative; top:20px">@price ₺</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                </tr>
+            }
+
+            else
+            {
+                <tr>
+                    <td style="font-weight:bold">Toplam :</td>
+                    <td></td>
+                    <td></td>
+                    <td style="font-weight:bold">@toplam ₺</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr></tr>
+                <tr></tr>
+                 <thead class="thead-dark">
+                    <tr>
+                        <th style="font-size:20px">@c.Date.ToString("dd/MM/yyyy HH:mm") Tarihli Siparişiniz</th>
+                        <th style="font-size:20px">Yemek</th>
+                        <th style="font-size:20px"> Adet</th>
+                        <th style="font-size:20px"> Fiyat</th>
+                        <th style="font-size:20px"> Sipariş Durumu: </th>
+                        <th style="font-size:20px; "> @c.Situation</th>
+                
+                    </tr>
+                 </thead>
+                    toplam = 0;
+                    price = @c.FoodPrice* @c.Amount;
+                    toplam += price;
+                    <tr></tr>
+                    <tr>
+
+                        <td><center><div class="mr-1"><img class="rounded" src="@c.FoodPicture" width="120"></div></center></td>
+                        <td style="position:relative; top:20px">@c.FoodName</td>
+                        <td style="position:relative; top:20px">@c.Amount Adet</td>
+                        <td id="price" style="position:relative; top:20px">@price ₺</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    }
+                    date = c.Date;
+                    }
+
+                    <tr>
+                        <td style="font-weight:bold">Toplam :</td>
+                        <td></td>
+                        <td></td>
+                        <td style="font-weight:bold">@toplam ₺</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+
+            </table>
+</body>
+</html>
+
+

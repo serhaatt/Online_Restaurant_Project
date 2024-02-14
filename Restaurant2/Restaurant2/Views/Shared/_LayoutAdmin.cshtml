@@ -1,0 +1,51 @@
+﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Menü</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Scripts/Css/LayoutCss.css">
+    <script src="~/Scripts/JavaScripts/LayoutJS.js"></script>
+</head>
+<body>
+    <div class="side_menu">
+        <div class="burger_box">
+            <div class="menu-icon-container">
+                <a href="#" class="menu-icon js-menu_toggle closed">
+                    <span class="menu-icon_box">
+                        <span class="menu-icon_line menu-icon_line--1"></span>
+                        <span class="menu-icon_line menu-icon_line--2"></span>
+                        <span class="menu-icon_line menu-icon_line--3"></span>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <div class="px-5">
+            <h2 class="menu_title">Diğer</h2>
+            <ul class="list_load">
+                <li class="list_item"><a href="~/Admin/AFood">Yemek Listesi</a></li>
+                <li class="list_item"><a href="~/Admin/FoodAdd">Yemek Ekle</a></li>
+                <li class="list_item"><a href="~/Admin/Cupons">Kuponlar</a></li>
+                <li class="list_item"><a href="~/Admin/Coruier">Kuryeler</a></li>
+                <li class="list_item"><a href="/Admin/Orders">Siparişler</a></li>
+                <li class="list_item"><a href="/Admin/Users">Kullanıcılar</a></li>
+                <li class="list_item"><a href="/User/Quit">Çıkış Yap</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

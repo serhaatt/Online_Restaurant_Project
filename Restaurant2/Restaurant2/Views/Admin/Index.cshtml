@@ -1,0 +1,64 @@
+﻿@model Restaurant1.Models.admin.adminInfo
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Scripts/Css/styleLogin.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .login-key {
+            height: 100px;
+            font-size: 80px;
+            line-height: 100px;
+            background: -webkit-linear-gradient(#27EF9F, #0DB8DE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("Index", "Admin", FormMethod.Post))
+    {
+<section class="container">
+    <div class="circle circle-one"></div>
+    <div class="form-container">
+        @*<img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" class="illustration" />*@
+        <div class="col-lg-12 login-key" style="position:relative;left:115px">
+            <i class="fa fa-key" aria-hidden="true" ></i>
+        </div>
+        <h1 class="opacity" style="position:relative;left:120px">Admin Girişi</h1>
+        <form>
+            <div class="login-container" style="position:relative;left:50px">
+                @Html.AntiForgeryToken()
+
+
+                @Html.LabelFor(m => m.Email, new { @style = "font-size:15px" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email", @style = "font-size:15px" }) <br />
+
+                @Html.LabelFor(m => m.Password, new { @style = "font-size:15px" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @minlength = 4, @style = "font-size:15px" }) <br />
+
+
+                <div class="register-forget opacity" style="position:relative;left:115px">
+                    <input type="submit" value="Giriş Yap" style="font-size:large" />
+                </div>
+                @if (Model.Error != null)
+                {
+                    <div class="alert alert-danger" style="width:340px">
+                        <i class="bi-exclamation-octagon-fill" style="font-size:15px;font-family:Arial"> Hata!  @Model.Error</i>
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+    <div class="circle circle-two"></div>
+
+</section>}
+    <script src="~/Scripts/JsLogin.js"></script>
+</body>
+</html>

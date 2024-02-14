@@ -1,0 +1,31 @@
+﻿<div class="my-3">
+    <h6 class="lead">
+        <i class="fa fa-filter text-secondary"></i>
+        Filtrele
+    </h6>
+</div>
+
+<div class="my-2">
+    <form action="">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <div class="form-group my-2">
+            <input class="form-control" id="SearchTerm" placeholder="Search" />
+        </div>
+
+        <div class="form-group my-2">
+            <input class="form-control" id="MinPrice" placeholder="Min. Price" />
+        </div>
+
+        <div class="form-group my-2">
+            <input class="form-control" id="MaxPrice" placeholder="Max. Price" />
+        </div>
+
+
+    </form>
+        <div class="form-group my-2">
+            <button id="btn1" class="btn btn-danger" value="Ara" onclick="return filtrele()" >Ara</button>
+            <input id="btn2" class="btn btn-danger" type="submit" value="Filtrelemeyi Temizle" onclick="return filter()" />
+            @*<button id="btn2" class="btn btn-danger">@Html.ActionLink("Filtrelemeyi Temizle", "Food", "User", new { style = "color:white; text-decoration:none" })</button><br />*@
+        </div>
+</div>
+        

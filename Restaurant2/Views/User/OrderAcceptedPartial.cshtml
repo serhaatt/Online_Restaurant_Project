@@ -1,0 +1,129 @@
+﻿@model Restaurant1.Models.User.UserInfo
+<head>
+    <style>
+        body {
+            background-color: #eee;
+        }
+
+        .card {
+            background-color: #fff;
+            width: 1200px;
+            height:700px;
+            border: none;
+            border-radius: 16px;
+        }
+
+        .info {
+            line-height: 19px;
+        }
+
+        .name {
+            color: #4c40e0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .order {
+            font-size: 14px;
+            font-weight: 400;
+            color: #b7b5b5;
+        }
+
+        .detail {
+            line-height: 19px;
+        }
+
+        .summery {
+            color: #d2cfcf;
+            font-weight: 400;
+            font-size: 13px;
+        }
+        .text {
+            line-height: 15px;
+        }
+
+        .new {
+            color: #000;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .money {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .address {
+            color: #d2cfcf;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .last {
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+
+        .address-line {
+            color: #4C40E0;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .card span{
+            font-size:25px;
+        }
+        .hrCss{
+            position:relative;
+            top:1%;
+        }
+    </style>
+</head>
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card p-4 mt-3">
+        <div class="first d-flex justify-content-between align-items-center mb-3">
+            <div class="info">
+                <span class="d-block name" style="position:absolute;top:5%;">Teşekkürler, @Model.Name</span>
+                <span class="order" style="position:absolute;top:10%;">Order - @Model.AptNo</span>
+
+            </div>
+
+            <img src="~/Resimler/döner.jpg" width="80" />
+
+
+        </div>
+        <div class="detail">
+            <span class="d-block summery" style="position:absolute;top:15%;">Siparişin alındı. Bizi tercih ettiğin için teşekkür ederiz.</span>
+        </div>
+
+        <div class="text">
+            <span class="d-block new mb-1" style="position:absolute;top:25%;">@Model.Name</span>
+        </div>
+        <span class="d-block address mb-3" style="position:absolute;top:35%;">@Model.Adress</span>
+        <div class="  money d-flex flex-row mt-2 align-items-center" style="position:absolute;top:45%;">
+            <img src="~/Resimler/kart.jpg" width="20" />
+
+            <span class="ml-2">Kredi Kartı</span>
+
+        </div>
+        <hr class="hrCss">
+        <div class="last d-flex align-items-center mt-3" style="position:absolute;top:55%;">
+            <span class="address-line"><a href="~/User/UserOrders">Sipariş durumunu görüntüle.</a></span>
+
+        </div>
+        <div>
+            <img style="width: 40%; position: absolute; left: 60%; top: 40%" src="~/Resimler/logo1.png" />
+        </div>
+        <div style="position:absolute; top: 40%;left:-34.5%">
+            @Html.Action("KuryeAnimation", "User")
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Tebrikler mesajı animasyonu
+        $("#tebrikler").fadeIn(1000);
+    });
+</script>

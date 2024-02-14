@@ -1,0 +1,99 @@
+﻿@{
+    int count = 0;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <style>
+        /** TIPS:
+        1. The carousel shouldn't be in any other div, like for example div with class container.
+        2. You can align image position in classes bg1, bg2, bg3 using css background-position.
+        */
+
+        /* Carousel 100% Fullscreen */
+
+        .carousel, .item, .active {
+            height: 100%;
+        }
+
+        .carousel-inner {
+            height: 100%;
+        }
+
+        .carousel {
+            margin-bottom: 60px;
+        }
+
+        .carousel-caption {
+            z-index: 10;
+        }
+
+        .carousel .item {
+            background-color: #777;
+        }
+
+        .carousel .carousel-inner .bg {
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius:8px;
+        }
+
+        .carousel .carousel-inner .bg1 {
+            background-image: url("/Resimler/50cpn.jpeg");
+            background-position: center top;
+        }
+        .carousel .carousel-inner .bg2 {
+            background-image: url('/Resimler/kış30.jpeg');
+            background-position: center center;
+        }
+        .carousel .carousel-inner .bg3 {
+            background-image: url('/Resimler/15cpn.jpeg');
+            background-position: center bottom;  
+        }
+        .carousel .carousel-inner .bg4 {
+            background-image: url('/Resimler/allcpn.jpeg');
+            background-position: center bottom;
+           
+        }
+    </style>
+</head>
+<body>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="border-radius:50px;">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" style="border-radius:10px;">
+            <div class="item bg bg1 active">
+                <div class="container">
+                    <div class="carousel-caption">
+                    </div>
+                </div>
+            </div>
+            <div class="item bg bg2">
+                <div class="container">
+                    <div class="carousel-caption">
+                    </div>
+                </div>
+            </div>
+            <div class="item bg bg3">
+                <div class="container">
+                    <div class="carousel-caption">
+                    </div>
+                </div>
+            </div>
+            <div class="item bg bg4 active">
+                <div class="container">
+                    <div class="carousel-caption">
+                        @Html.ActionLink("Kuponları Görüntüle","UserCupons","User",new {@class="btn", @style="background-color:#c3195d;color:white" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+</body>
+</html>
